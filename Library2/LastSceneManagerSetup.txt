@@ -1,0 +1,5 @@
+sceneSetups:
+- path: Assets/GameDevHQ/FileBase/Projects/Tutorials/Starter_Files/Epic_Tower_Defense/Scenes/Start_Level.unity
+  isLoaded: 1
+  isActive: 1
+  isSubScene: 0
