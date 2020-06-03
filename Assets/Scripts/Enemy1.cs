@@ -10,6 +10,7 @@ public class Enemy1 : MonoBehaviour
     //public Camera cam;
     [SerializeField] GameObject _target;
     public NavMeshAgent agent;
+    [SerializeField] int _health = 1, _value = 10;
 
 
     private void Start()
@@ -28,14 +29,19 @@ public class Enemy1 : MonoBehaviour
     {
         if (other.tag == "TheHQ")
         {
-            SpawnManager.enemiesPool.Add(this.gameObject);
-            SpawnManager.enemiesSpawned.Remove(this.gameObject);
-
-                Debug.LogWarning("Pool: " + SpawnManager.enemiesPool.Count);
-                Debug.LogWarning("Spawned: " + SpawnManager.enemiesSpawned.Count);
-
-            this.gameObject.SetActive(false);
+            OnDying();
         }
+    }
+
+    void OnDying()
+    {
+        SpawnManager.enemiesPool.Add(this.gameObject);
+        SpawnManager.enemiesSpawned.Remove(this.gameObject);
+
+        Debug.LogWarning("Pool: " + SpawnManager.enemiesPool.Count);
+        Debug.LogWarning("Spawned: " + SpawnManager.enemiesSpawned.Count);
+
+        this.gameObject.SetActive(false);
     }
 
     //void PointAndClick()
