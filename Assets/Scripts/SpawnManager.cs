@@ -8,6 +8,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] List<GameObject> enemies;
     public static List<GameObject> enemiesSpawned = new List<GameObject>();
     public static List<GameObject> enemiesPool = new List<GameObject>();
+    [SerializeField] bool _isRandomSpawning;
+    [SerializeField] int _defaultIndexToSpawn;
 
 
     [Range(0.0f, 10.0f)] [SerializeField] float _spawnRate;
@@ -27,7 +29,15 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            enemiesSpawned.Add(Instantiate(enemies[0], _spawnPoint.transform));
+            if (_isRandomSpawning)
+            {
+                _defaultIndexToSpawn = Random.Range(0, enemies.Count);
+            }
+            else
+            {
+                _defaultIndexToSpawn = 0;
+            }
+            enemiesSpawned.Add(Instantiate(enemies[_defaultIndexToSpawn], _spawnPoint.transform));
             yield return new WaitForSeconds(_spawnRate);
 
         }
