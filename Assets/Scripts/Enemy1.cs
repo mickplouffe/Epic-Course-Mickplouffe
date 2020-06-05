@@ -12,36 +12,42 @@ public class Enemy1 : MonoBehaviour
     public NavMeshAgent agent;
     [SerializeField] int _health = 1, _warFund = 10;
 
+    private void OnEnable()
+    {
+        //Invoke("Hide", 30);
+        if (_target == null)
+        {
+            _target = GameObject.Find("TheHQ");
+        }
+        //agent.SetDestination(_target.transform.position);
+
+    }
 
     private void Start()
     {
         agent.SetDestination(_target.transform.position);
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        //PointAndClick();
-
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "TheHQ")
-        {
-            OnDying();
-        }
-    }
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    //PointAndClick();
+
+    //}
+
+
 
     void OnDying()
     {
-        SpawnManager.enemiesPool.Add(this.gameObject);
-        SpawnManager.enemiesSpawned.Remove(this.gameObject);
+        
 
-        Debug.LogWarning("Pool: " + SpawnManager.enemiesPool.Count);
-        Debug.LogWarning("Spawned: " + SpawnManager.enemiesSpawned.Count);
+    }
 
+    void Hide()
+    {
+        CancelInvoke();
         this.gameObject.SetActive(false);
+
     }
 
     //void PointAndClick()
