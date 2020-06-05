@@ -1,25 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class TheHQ : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] int _health = 100;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
         {
+            _health--;
+            //Update UI
             other.gameObject.SetActive(false);
         }
     }
