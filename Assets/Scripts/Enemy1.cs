@@ -8,9 +8,9 @@ public class Enemy1 : MonoBehaviour
 {
 
     //public Camera cam;
-    [SerializeField] GameObject _target;
+    public GameObject _target;
     public NavMeshAgent agent;
-    [SerializeField] int _health = 1, _value = 10;
+    [SerializeField] int _health = 1, _warFund = 10;
 
 
     private void Start()

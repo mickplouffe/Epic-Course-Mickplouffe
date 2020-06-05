@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : MonoSingleton<SpawnManager>
 {
-    [SerializeField] GameObject _spawnPoint;
+    [SerializeField] GameObject _spawnPoint, _theHQ;
     [SerializeField] List<GameObject> enemies;
     public static List<GameObject> enemiesSpawned = new List<GameObject>();
     public static List<GameObject> enemiesPool = new List<GameObject>();
@@ -13,15 +13,24 @@ public class SpawnManager : MonoBehaviour
 
 
     [Range(0.0f, 10.0f)] [SerializeField] float _spawnRate;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
+    {
+        if (_theHQ == null)
+        {
+            _theHQ = GameObject.Find("TheHQ");
+        }
+    }
+
+    public void StartSpawning()
     {
         StartCoroutine(nameof(Spawning));
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    public void StopSpawning()
     {
+        StopCoroutine(nameof(Spawning));
     }
 
 
@@ -38,6 +47,7 @@ public class SpawnManager : MonoBehaviour
                 _defaultIndexToSpawn = 0;
             }
             enemiesSpawned.Add(Instantiate(enemies[_defaultIndexToSpawn], _spawnPoint.transform));
+            enemiesSpawned[enemiesSpawned.Count - 1].GetComponent<Enemy1>()._target = _theHQ; //not Sure
             yield return new WaitForSeconds(_spawnRate);
 
         }
