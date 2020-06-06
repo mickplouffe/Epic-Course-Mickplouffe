@@ -42,7 +42,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2735971150218660834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3692c526bc4f2084bb66256c916b4e84, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f01bb7a2cae4b141a7a510447cbff47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 2

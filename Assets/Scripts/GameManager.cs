@@ -10,12 +10,12 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if (_isSpawnerEnabled)
         {
-            SpawnManager.Instance.StartSpawning();
+            //SpawnManager.Instance.StartSpawning();
 
         }
         else
         {
-            SpawnManager.Instance.StopSpawning();
+            //SpawnManager.Instance.StopSpawning();
 
         }
     }

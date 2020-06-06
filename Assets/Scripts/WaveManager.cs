@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +6,13 @@ public class WaveManager : MonoSingleton<WaveManager>
 {
     [SerializeField] int _currentWave, _amountToSpawn;
 
+    private void OnEnable()
+    {
+        SpawnManager.OnWaveFinished += StartWave;
+    }
     public void StartWave()
     {
-        
+        Invoke("NextWave", 20);
     }
 
     public void StoptWave()
@@ -29,6 +33,5 @@ public class WaveManager : MonoSingleton<WaveManager>
         _currentWave++;
         _amountToSpawn = 10 * _currentWave;
         SpawnManager.Instance.AddToSpawn(_amountToSpawn);
-        SpawnManager.Instance.StartSpawning();
     }
 }

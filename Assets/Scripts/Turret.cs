@@ -5,11 +5,6 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     [SerializeField] float _rotationSpeed;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public GameObject FindClosestEnemy()
     {
@@ -49,7 +44,7 @@ public class Turret : MonoBehaviour
             Debug.DrawRay(transform.position, newDirection, Color.red);
 
             // Calculate a rotation a step closer to the target and applies rotation to this object
-            transform.rotation = Quaternion.LookRotation(newDirection);
+            transform.rotation = Quaternion.LookRotation(new Vector3(newDirection.x, 0, newDirection.z));
         }
         
 

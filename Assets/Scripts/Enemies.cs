@@ -25,7 +25,7 @@ public class Enemies : MonoBehaviour
 
     void Hide()
     {
-        CancelInvoke();
+        //CancelInvoke();
         this.gameObject.SetActive(false);
 
     }
