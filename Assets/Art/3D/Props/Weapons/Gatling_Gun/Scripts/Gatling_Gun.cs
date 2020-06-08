@@ -64,6 +64,29 @@ namespace GameDevHQ.FileBase.Gatling_Gun
             }
         }
 
+        public void SHOOT(bool IsFireing)
+        {
+            if (IsFireing) //Check for left click (held) user input
+            {
+                RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel
+                Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
+                bulletCasings.Emit(1); //Emit the bullet casing particle effect  
+
+                if (_startWeaponNoise == true) //checking if we need to start the gun sound
+                {
+                    _audioSource.Play(); //play audio clip attached to audio source
+                    _startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
+                }
+
+            }
+            else if (!IsFireing) //Check for left click (release) user input
+            {
+                Muzzle_Flash.SetActive(false); //turn off muzzle flash particle effect
+                _audioSource.Stop(); //stop the sound effect from playing
+                _startWeaponNoise = true; //set the start weapon noise value to true
+            }
+        }
+
         // Method to rotate gun barrel 
         void RotateBarrel() 
         {
