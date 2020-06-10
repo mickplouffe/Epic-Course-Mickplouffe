@@ -32,6 +32,6 @@ public class WaveManager : MonoSingleton<WaveManager>
 
         _currentWave++;
         _amountToSpawn = 10 * _currentWave;
-        SpawnManager.Instance.AddToSpawn(_amountToSpawn);
+        //SpawnManager.Instance.AddToSpawn(_amountToSpawn);
     }
 }

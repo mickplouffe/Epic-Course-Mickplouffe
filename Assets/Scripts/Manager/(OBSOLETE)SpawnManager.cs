@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SpawnManager : MonoSingleton<SpawnManager>
+public class SpawnManager : MonoBehaviour//: MonoSingleton<SpawnManager>
 {
     [SerializeField] GameObject _spawnPoint, _theHQ, _enemiesContainer;
     [SerializeField] List<GameObject> enemies;
@@ -16,6 +16,9 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
     public static Action OnWaveFinished;
 
+    //----- Scriptable Test----- //
+    [SerializeField] List<Wave> _waves; //If Next add Delay is == 0, use default. Else Add it to the default delay.
+    
 
     // Start is called before the first frame update
     void Awake()
@@ -48,7 +51,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
         _enemyToSpawn += addSpawn;
         if (!_isSpawningRoutineRunning)
         {
-            SpawnManager.Instance.StartSpawning();
+            //SpawnManager.Instance.StartSpawning();
         }
     }
 
@@ -58,9 +61,9 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
         while (_enemyToSpawn > 0)
         {
-            if (PoolManager.enemiesSpawned != null)
+            if (PoolManager.enemiesPooled != null)
             {
-                foreach (var enemyObj in PoolManager.enemiesSpawned)
+                foreach (var enemyObj in PoolManager.enemiesPooled)
                 {
                     if (enemyObj.activeInHierarchy == false)
                     {
@@ -77,7 +80,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
                 }
             }
 
-            if (totalEnable == PoolManager.enemiesSpawned.Count)
+            if (totalEnable == PoolManager.enemiesPooled.Count)
             {
                 if (_isRandomSpawning)
                 {
