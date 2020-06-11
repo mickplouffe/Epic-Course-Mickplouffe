@@ -1,15 +1,8 @@
 ﻿using UnityEngine;
 
-
 public class HUDController : MonoBehaviour
 {
     GameObject _placeHolder;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -22,12 +15,10 @@ public class HUDController : MonoBehaviour
             if (hitInfo.transform.tag == "TurretSpot")
             {
                 _placeHolder.transform.position = hitInfo.transform.position;
-
             }
             else
             {
                 _placeHolder.transform.position = hitInfo.point;
-
             }
         }
 
@@ -36,7 +27,6 @@ public class HUDController : MonoBehaviour
             if (_placeHolder != null)
             {
                 Destroy(_placeHolder.gameObject);
-                //_placeHolder = null;
             }
         }
     }

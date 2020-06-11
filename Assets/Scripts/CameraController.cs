@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
+/// <summary>
+/// NEED REDO
+/// </summary>
 public class CameraController : MonoBehaviour
 {
     public static Action<Vector3> moveCenterFocus;

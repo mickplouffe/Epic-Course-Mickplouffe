@@ -4,7 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-
+/// <summary>
+/// NEED REDO
+/// </summary>
 public class SpawnerManager : MonoSingleton<SpawnerManager>
 {
     [SerializeField] GameObject _spawnPoint, _theHQ, _enemiesContainer;
@@ -12,18 +14,16 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
     [SerializeField] List<GameObject> enemies;
     [SerializeField] bool _isRandomSpawn;
 
-    [SerializeField] List<Wave> _waves; //If Next add Delay is == 0, use default. Else Add it to the default delay.
+    [SerializeField] List<Wave> _waves;
 
     //--- IENumerator Init ---//
     Coroutine instSpawning = null;
-
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            instSpawning = StartCoroutine(Spawning(""));
-
+            instSpawning = StartCoroutine(Spawning());
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -44,7 +44,6 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         }
         else
         {
-            //Debug.LogError("The Enemy type ask does not exist! Spawning a random one instead.");
             enemyInst = Instantiate(enemies[Random.Range(0, enemies.Count)]);
 
         }
@@ -64,11 +63,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         enemyToReuse.GetComponent<NavMeshAgent>().SetDestination(_theHQ.transform.position);
     }
 
-
-    /// <summary>
-    /// NEED CLEAN UP
-    /// </summary>
-    IEnumerator Spawning(string enemyType)
+    IEnumerator Spawning()
     {
         float SpawnDelay;
         float WaveDelay;
