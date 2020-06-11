@@ -43,25 +43,25 @@ namespace GameDevHQ.FileBase.Gatling_Gun
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetMouseButton(0)) //Check for left click (held) user input
-            { 
-                RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel
-                Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
-                bulletCasings.Emit(1); //Emit the bullet casing particle effect  
+            //if (Input.GetMouseButton(0)) //Check for left click (held) user input
+            //{ 
+            //    RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel
+            //    Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
+            //    bulletCasings.Emit(1); //Emit the bullet casing particle effect  
 
-                if (_startWeaponNoise == true) //checking if we need to start the gun sound
-                {
-                    _audioSource.Play(); //play audio clip attached to audio source
-                    _startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
-                }
+            //    if (_startWeaponNoise == true) //checking if we need to start the gun sound
+            //    {
+            //        _audioSource.Play(); //play audio clip attached to audio source
+            //        _startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
+            //    }
 
-            }
-            else if (Input.GetMouseButtonUp(0)) //Check for left click (release) user input
-            {      
-                Muzzle_Flash.SetActive(false); //turn off muzzle flash particle effect
-                _audioSource.Stop(); //stop the sound effect from playing
-                _startWeaponNoise = true; //set the start weapon noise value to true
-            }
+            //}
+            //else if (Input.GetMouseButtonUp(0)) //Check for left click (release) user input
+            //{      
+            //    Muzzle_Flash.SetActive(false); //turn off muzzle flash particle effect
+            //    _audioSource.Stop(); //stop the sound effect from playing
+            //    _startWeaponNoise = true; //set the start weapon noise value to true
+            //}
         }
 
         public void SHOOT(bool IsFireing)

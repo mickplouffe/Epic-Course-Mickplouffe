@@ -3,7 +3,7 @@
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] bool _isSpawnerEnabled;
-
+    public static int warFund = 350;
 
     // Start is called before the first frame update
     void Start()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - TheHQ
   - Enemy
+  - TurretSpot
   layers:
   - Default
   - TransparentFX
