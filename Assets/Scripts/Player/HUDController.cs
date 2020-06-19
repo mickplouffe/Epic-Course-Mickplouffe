@@ -1,24 +1,65 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class HUDController : MonoBehaviour
+
+public class HUDController : MonoSingleton<HUDController>
 {
     GameObject _placeHolder;
+    [SerializeField] GameObject TurretInPool1; //CHANGE IT!
+    [SerializeField] GameObject TurretInPool2; //CHANGE IT!
+    [SerializeField] Text _livesCount, _wavesCount, _warFundCount;
+
+
+    public static Action<bool> PlacingTurret;
+
+    private void Start()
+    {
+        UpdateHUD();
+    }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hitInfo;
-
-        if (_placeHolder != null && Physics.Raycast(rayOrigin, out hitInfo))
+        if (_placeHolder != null)
         {
-            if (hitInfo.transform.tag == "TurretSpot")
+            PlaceHolderFolowing();
+        }
+    }
+
+    private void PlaceHolderFolowing()
+    {
+        if (_placeHolder != null)
+        {
+            if (_placeHolder.transform.position != Vector3.zero)
             {
-                _placeHolder.transform.position = hitInfo.transform.position;
-            }
-            else
-            {
-                _placeHolder.transform.position = hitInfo.point;
+
+                Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitInfo;
+                if (Physics.Raycast(rayOrigin, out hitInfo))
+                {
+                    if (hitInfo.transform.tag == "TurretSpot")
+                    {
+
+                        _placeHolder.transform.position = new Vector3(hitInfo.transform.position.x, hitInfo.transform.position.y + .5f, hitInfo.transform.position.z);
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            if (_placeHolder.name == "Gatling_Gun_PlaceHolder(Clone)")
+                            {
+                                hitInfo.transform.gameObject.GetComponent<TurretSpot>().PlaceTower(TurretInPool1);
+                            }
+                            else
+                            {
+                                hitInfo.transform.gameObject.GetComponent<TurretSpot>().PlaceTower(TurretInPool2);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _placeHolder.transform.position = hitInfo.point;
+                    }
+                }
             }
         }
 
@@ -26,6 +67,9 @@ public class HUDController : MonoBehaviour
         {
             if (_placeHolder != null)
             {
+                PlacingTurret?.Invoke(false);
+                Debug.LogError("Stoping Placement");
+
                 Destroy(_placeHolder.gameObject);
             }
         }
@@ -33,15 +77,43 @@ public class HUDController : MonoBehaviour
 
     public void BuyTurret(GameObject turret)
     {
-        //call turret to the  turretManager
-        //if (GameManager.warFund > turret.cost)
-        //{
+        PlacingTurret?.Invoke(true);
 
-        //}
-
-        if (_placeHolder == null)
+        if (_placeHolder != null)
+        {
+            if (turret.name != _placeHolder.name)
+            {
+                Destroy(_placeHolder);
+                _placeHolder = Instantiate(turret);
+            }
+        }
+        else
         {
             _placeHolder = Instantiate(turret);
+        }
+    }
+
+    public void UpdateHUD(string nameToUpdate = null)
+    {
+        switch (nameToUpdate)
+        {
+            case "lives":
+                _livesCount.text = TheHQ.Instance.GetHealth().ToString();
+                break;
+
+            case "waves":
+                //_wavesCount.text = WaveManager.Instance.GetCurrentWave().ToString();
+                break;
+
+            case "funds":
+                _warFundCount.text = GameManager.Instance.GetWarFunds().ToString();
+                break;
+
+            default:
+                _livesCount.text = TheHQ.Instance.GetHealth().ToString();
+                //_wavesCount.text = WaveManager.Instance.GetCurrentWave().ToString();
+                _warFundCount.text = GameManager.Instance.GetWarFunds().ToString();
+                break;
         }
     }
 }

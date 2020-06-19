@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2734808148871730210}
-  - component: {fileID: 2737122616210288856}
+  - component: {fileID: 2699720121456369572}
   m_Layer: 0
   m_Name: Rotate
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 2732633096315932334}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2737122616210288856
+--- !u!114 &2699720121456369572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,10 +42,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2735971150218660834}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e772ba1060bff84e8780bc30d400da0, type: 3}
+  m_Script: {fileID: 11500000, guid: 39c5f2997965e834caae320f30b7d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 0
+  _rotationSpeed: 2
 --- !u!1 &2735971845154655124
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 2732633096315932334}
   - component: {fileID: 2624212029573025144}
   - component: {fileID: 2655566391731437640}
+  - component: {fileID: 2807275071275101534}
   m_Layer: 0
   m_Name: Gatling_Gun
   m_TagString: Untagged
@@ -231,15 +232,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2736260628701335162}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 2734808148871730210}
   - {fileID: 2734560574647466160}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &2624212029573025144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +248,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2736260628701335162}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11c7edd4816764b2cb111ea15f8f117a, type: 3}
   m_Name: 
@@ -351,6 +352,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2807275071275101534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2736260628701335162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ace8af70ca4b5e4b91eff4c0e2a4a93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _warFundCost: 20
 --- !u!1 &2736347491043900704
 GameObject:
   m_ObjectHideFlags: 0

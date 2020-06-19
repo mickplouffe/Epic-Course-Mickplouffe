@@ -32,7 +32,6 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         }
     }
 
-
     void Spawn(string enemyType = null)
     {
         GameObject foundEnemy = enemies.FirstOrDefault(i => i.name == enemyType);
@@ -59,8 +58,10 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
             enemyToReuse = enemies[Random.Range(0, enemies.Count)];
         }
         enemyToReuse.SetActive(true);
-        enemyToReuse.GetComponent<NavMeshAgent>().Warp(_spawnPoint.transform.position);
-        enemyToReuse.GetComponent<NavMeshAgent>().SetDestination(_theHQ.transform.position);
+
+        NavMeshAgent navMeshAgentComp = enemyToReuse.GetComponent<NavMeshAgent>();
+        navMeshAgentComp.Warp(_spawnPoint.transform.position);
+        navMeshAgentComp.SetDestination(_theHQ.transform.position);
     }
 
     IEnumerator Spawning()

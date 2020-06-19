@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class TheHQ : MonoBehaviour
+public class TheHQ : MonoSingleton<TheHQ>
 {
     [SerializeField] int _health = 100;
 
@@ -10,8 +10,16 @@ public class TheHQ : MonoBehaviour
         if (other.tag == "Enemy")
         {
             _health--;
-            //Update UI
+            if (_health < 0)
+                _health = 0;
+            HUDController.Instance.UpdateHUD("lives");
+            GameManager.Instance.ChangeWarFunds(5);
             other.gameObject.SetActive(false);
         }
+    }
+
+    public int GetHealth()
+    {
+        return _health;
     }
 }
