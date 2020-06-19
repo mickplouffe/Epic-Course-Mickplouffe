@@ -19,7 +19,7 @@ public class HUDController : MonoSingleton<HUDController>
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (_placeHolder != null)
         {
@@ -31,34 +31,30 @@ public class HUDController : MonoSingleton<HUDController>
     {
         if (_placeHolder != null)
         {
-            if (_placeHolder.transform.position != Vector3.zero)
+            Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(rayOrigin, out hitInfo))
             {
-
-                Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hitInfo;
-                if (Physics.Raycast(rayOrigin, out hitInfo))
+                if (hitInfo.transform.tag == "TurretSpot")
                 {
-                    if (hitInfo.transform.tag == "TurretSpot")
+
+                    _placeHolder.transform.position = new Vector3(hitInfo.transform.position.x, hitInfo.transform.position.y + .5f, hitInfo.transform.position.z);
+
+                    if (Input.GetMouseButtonDown(0))
                     {
-
-                        _placeHolder.transform.position = new Vector3(hitInfo.transform.position.x, hitInfo.transform.position.y + .5f, hitInfo.transform.position.z);
-
-                        if (Input.GetMouseButtonDown(0))
+                        if (_placeHolder.name == "Gatling_Gun_PlaceHolder(Clone)")
                         {
-                            if (_placeHolder.name == "Gatling_Gun_PlaceHolder(Clone)")
-                            {
-                                hitInfo.transform.gameObject.GetComponent<TurretSpot>().PlaceTower(TurretInPool1);
-                            }
-                            else
-                            {
-                                hitInfo.transform.gameObject.GetComponent<TurretSpot>().PlaceTower(TurretInPool2);
-                            }
+                            hitInfo.transform.gameObject.GetComponent<TurretSpot>().PlaceTower(TurretInPool1);
+                        }
+                        else
+                        {
+                            hitInfo.transform.gameObject.GetComponent<TurretSpot>().PlaceTower(TurretInPool2);
                         }
                     }
-                    else
-                    {
-                        _placeHolder.transform.position = hitInfo.point;
-                    }
+                }
+                else
+                {
+                    _placeHolder.transform.position = hitInfo.point;
                 }
             }
         }
@@ -68,7 +64,6 @@ public class HUDController : MonoSingleton<HUDController>
             if (_placeHolder != null)
             {
                 PlacingTurret?.Invoke(false);
-                Debug.LogError("Stoping Placement");
 
                 Destroy(_placeHolder.gameObject);
             }

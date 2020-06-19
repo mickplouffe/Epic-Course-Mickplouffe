@@ -4,32 +4,42 @@ using UnityEngine;
 
 public class TurretTargeting : MonoBehaviour
 {
-    [SerializeField] float _rotationSpeed = 1;
+    [SerializeField] float _rotationSpeed = 1, _range = 100;
+    [SerializeField] GameObject atkRangeSphere;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        UpdateAtkRange();
+
+        Invoke("OnSelected", 2);
+    }
+
     void Update()
     {
         Aiming();
 
     }
+
+    void UpdateAtkRange()
+    {
+        atkRangeSphere.transform.localScale = new Vector3(_range,_range,_range) / 4;
+    }
+
+    private void OnSelected() //I the turret is selected, Show range, Else do not.
+    {
+        atkRangeSphere.SetActive(false);
+    }
+
     private void Aiming()
     {
         GameObject _target = FindClosestEnemy();
         if (_target != null)
         {
-            // Determine which direction to rotate towards
             Vector3 targetDirection = _target.transform.position - transform.position;
-
-            // The step size is equal to speed times frame time.
             float singleStep = _rotationSpeed * Time.deltaTime;
-
-            // Rotate the forward vector towards the target direction by one step
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+            //Debug.DrawRay(transform.position, newDirection, Color.red);
 
-            // Draw a ray pointing at our target in
-            Debug.DrawRay(transform.position, newDirection, Color.red);
-
-            // Calculate a rotation a step closer to the target and applies rotation to this object
             transform.rotation = Quaternion.LookRotation(new Vector3(newDirection.x, 0, newDirection.z));
         }
 
@@ -40,7 +50,7 @@ public class TurretTargeting : MonoBehaviour
         GameObject[] gos;
         gos = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject closest = null;
-        float distance = Mathf.Infinity;
+        float distance = _range;
         Vector3 position = transform.position;
         foreach (GameObject go in gos)
         {
