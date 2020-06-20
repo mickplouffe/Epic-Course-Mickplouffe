@@ -6,13 +6,14 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
 
+    [SerializeField] TurretTargeting _turretTargeting;
     [SerializeField] int _warFundCost = 100;
 
     private void Shooting(GameObject target)
     {
-        if (true)
+        if (_turretTargeting.IsTargetLocked())
         {
-
+            //Shoot
         }
     }
 
@@ -21,4 +22,5 @@ public class Turret : MonoBehaviour
     {
         return _warFundCost;
     }
+
 }

@@ -5,7 +5,7 @@ public class Enemies : MonoBehaviour
 {
     public GameObject _target;
     public NavMeshAgent agent;
-    [SerializeField] int _health = 1, _warFund = 10;
+    [SerializeField] int _health = 1, _defaultHealth, _warFundValue = 10;
 
     private void OnEnable()
     {
@@ -20,6 +20,7 @@ public class Enemies : MonoBehaviour
 
     private void Start()
     {
+        _defaultHealth = _health;
         agent.SetDestination(_target.transform.position);
     }
 
@@ -27,7 +28,20 @@ public class Enemies : MonoBehaviour
     {
         //CancelInvoke();
         this.gameObject.SetActive(false);
+        _health = _defaultHealth;
 
+    }
+
+    public void TakeDamage(int dmg = 1)
+    {
+        _health -= dmg;
+        Debug.LogWarning("Taking Damage!");
+
+        if (_health <= 0)
+        {
+            GameManager.Instance.ChangeWarFunds(_warFundValue);
+            Hide();
+        }
     }
 
 }

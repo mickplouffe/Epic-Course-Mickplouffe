@@ -45,9 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c5f2997965e834caae320f30b7d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 2
+  _rotationSpeed: 4
   _range: 50
+  _viewAngle: 35
+  _fireRateDelay: 0.5
+  _damageDealing: 1
   atkRangeSphere: {fileID: 4965139397976558725}
+  _isTargetLocked: 0
+  _fireRateCooldown: 0
 --- !u!1 &2735971845154655124
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ace8af70ca4b5e4b91eff4c0e2a4a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _warFundCost: 20
+  _turretTargeting: {fileID: 2699720121456369572}
+  _warFundCost: 200
 --- !u!1 &2736347491043900704
 GameObject:
   m_ObjectHideFlags: 0
