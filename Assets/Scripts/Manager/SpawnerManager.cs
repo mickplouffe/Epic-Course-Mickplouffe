@@ -74,7 +74,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         {
             foreach (var subWavesItem in wavesItem.SubWaves)
             {
-                Debug.Log(subWavesItem.SubWaveName);
+                //Debug.Log(subWavesItem.SubWaveName);
                 float waveDelay = subWavesItem.NextWaveDelay;
 
                 if (waveDelay != 0)

@@ -29,10 +29,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Fade: 0.38
-    - _Glow: 0.03
-    - _Scale: 100
+    - _Fade: 0.61
+    - _Glow: 0.2
+    - _Scale: 300
     m_Colors:
     - _GlowColour: {r: 0.10980392, g: 2, b: 0, a: 1}
-    - _coreColor: {r: 0.28751335, g: 0.3342628, b: 0.6698113, a: 0}
+    - _coreColor: {r: 0.21568628, g: 0.2901961, b: 0.8235294, a: 0}
     - _noiseOffset: {r: 0, g: 0.01, b: 0, a: 0}

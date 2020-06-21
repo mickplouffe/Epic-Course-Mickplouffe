@@ -42,7 +42,5 @@ public class HitScanTurretBehaviour : MonoBehaviour
         _fireRateCooldown = true;
         yield return new WaitForSeconds(_fireRateDelay);
         _fireRateCooldown = false;
-        StopCoroutine(nameof(FiringCooldown));
-
     }
 }
