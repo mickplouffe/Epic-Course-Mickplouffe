@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2347987531304068063}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 25, z: 5}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 8058281316503606573}
   m_RootOrder: 1
@@ -436,7 +436,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8055388311940833505}
-  - component: {fileID: 5069256403740432742}
   m_Layer: 0
   m_Name: RotX
   m_TagString: Untagged
@@ -460,26 +459,6 @@ Transform:
   m_Father: {fileID: 8055301174931614145}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5069256403740432742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8052910476366689123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c5f2997965e834caae320f30b7d662, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rotationSpeed: 1
-  _range: 75
-  _viewAngle: 15
-  _fireRateDelay: 1
-  _damageDealing: 1
-  atkRangeSphere: {fileID: 2347987531304068063}
-  _isTargetLocked: 0
-  _fireRateCooldown: 0
 --- !u!1 &8052962227792440499
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +787,8 @@ GameObject:
   - component: {fileID: 8058281316503606573}
   - component: {fileID: 7949831016831715507}
   - component: {fileID: 2717251769327699142}
+  - component: {fileID: 7885305721592178843}
+  - component: {fileID: 6616774724995267096}
   m_Layer: 0
   m_Name: Missile_Launcher
   m_TagString: Untagged
@@ -838,7 +819,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8053202391292973717}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f37f75a662e08584192823355ae4ac73, type: 3}
   m_Name: 
@@ -870,8 +851,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ace8af70ca4b5e4b91eff4c0e2a4a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turretTargeting: {fileID: 0}
   _warFundCost: 500
+--- !u!114 &7885305721592178843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8053202391292973717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c5f2997965e834caae320f30b7d662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 0.7
+  _range: 75
+  _viewAngle: 90
+  _rotationObj: {fileID: 8052910476366689123}
+  atkRangeSphere: {fileID: 2347987531304068063}
+  behaviourScript: {fileID: 6616774724995267096}
+  _isTargetLocked: 0
+--- !u!114 &6616774724995267096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8053202391292973717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c463e9b29448343bdb0976339e00b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fireRateDelay: 1
+  gatlingScript: {fileID: 0}
+  _damageDealing: 3
 --- !u!1 &8053229533664800315
 GameObject:
   m_ObjectHideFlags: 0

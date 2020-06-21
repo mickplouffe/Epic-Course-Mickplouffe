@@ -8,16 +8,11 @@ using UnityEngine;
 /// </summary>
 public class TurretTargeting : MonoBehaviour
 {
-    [SerializeField] float _rotationSpeed = 1, _range = 100, _viewAngle = 15, _fireRateDelay = 1;
-    [SerializeField] int _damageDealing = 1;
-    [SerializeField] GameObject atkRangeSphere;
-    [SerializeField] bool _isTargetLocked = false, _fireRateCooldown;
+    [SerializeField] float _rotationSpeed = 1, _range = 100, _viewAngle = 15;
+    [SerializeField] GameObject _rotationObj, atkRangeSphere;
+    public HitScanTurretBehaviour behaviourScript;
+    [SerializeField] bool _isTargetLocked = false;
     GameObject _target;
-
-    private void OnDisable()
-    {
-        StopCoroutine(nameof(FiringCooldown));
-    }
 
     private void Start()
     {
@@ -39,53 +34,28 @@ public class TurretTargeting : MonoBehaviour
     private void OnSelected() //I the turret is selected, Show range, Else do not.
     {
         atkRangeSphere.SetActive(false);
-    }
-
-    public bool IsTargetLocked()
-    {
-
-        return _isTargetLocked;
-    }
-
-    bool FindVisibleTargets()
-    {
-        if (_target != null)
-        {
-            Vector3 dirToTarget = (new Vector3(_target.transform.position.x, 0, _target.transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < _viewAngle / 2)
-            {
-                Debug.LogError("TARGET FOUND!!!");
-                float dstToTarget = Vector3.Distance(transform.position, _target.transform.position);
-                return true;
-
-            }
-        }
-        return false;
-
-    }
+    } 
 
     private void Aiming()
     {
         _target = FindClosestEnemy();
         if (_target != null)
         {
-            Vector3 targetDirection = _target.transform.position - transform.position;
+            Vector3 targetDirection = _target.transform.position - _rotationObj.transform.position;
             float singleStep = _rotationSpeed * Time.deltaTime;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
-            //Debug.DrawRay(transform.position, newDirection, Color.red);
+            Vector3 newDirection = Vector3.RotateTowards(_rotationObj.transform.forward, targetDirection, singleStep, 0.0f);
 
-            transform.rotation = Quaternion.LookRotation(new Vector3(newDirection.x, 0, newDirection.z));
+            _rotationObj.transform.rotation = Quaternion.LookRotation(new Vector3(newDirection.x, 0, newDirection.z));
         }
 
         if (FindVisibleTargets())
         {
+            behaviourScript.Fire(_target);
 
-            if (!_fireRateCooldown)
-            {
-                StartCoroutine(nameof(FiringCooldown));
-                _target.GetComponent<Enemies>().TakeDamage(_damageDealing);
-
-            }
+        }
+        else
+        {
+            behaviourScript.Fire();
 
         }
 
@@ -97,7 +67,7 @@ public class TurretTargeting : MonoBehaviour
         gos = GameObject.FindGameObjectsWithTag("Enemy");
         GameObject closest = null;
         float distance = _range;
-        Vector3 position = transform.position;
+        Vector3 position = _rotationObj.transform.position;
         foreach (GameObject go in gos)
         {
             Vector3 diff = go.transform.position - position;
@@ -111,12 +81,18 @@ public class TurretTargeting : MonoBehaviour
         return closest;
     }
 
-    IEnumerator FiringCooldown()
+    bool FindVisibleTargets()
     {
-            _fireRateCooldown = true;
-            yield return new WaitForSeconds(_fireRateDelay);
-            _fireRateCooldown = false;
-        StopCoroutine(nameof(FiringCooldown));
+        if (_target != null)
+        {
+            Vector3 dirToTarget = (new Vector3(_target.transform.position.x, 0, _target.transform.position.z) - new Vector3(_rotationObj.transform.position.x, 0, _rotationObj.transform.position.z)).normalized;
+            if (Vector3.Angle(_rotationObj.transform.forward, dirToTarget) < _viewAngle / 2)
+                return true;
+            
+        }
+        return false;
 
     }
+
+
 }

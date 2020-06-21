@@ -10,21 +10,17 @@ public class TurretSpot : MonoBehaviour
 
     public void PlaceTower(GameObject turret)
     {
-        Debug.Log("Try Placing");
-
-
         if (!_isOccupied)
         {
             Turret turretComp = turret.GetComponent<Turret>();
             if ((GameManager.Instance.GetWarFunds() - turretComp.GetWarFundCost()) >= 0)
             {
-                GameManager.Instance.ChangeWarFunds(- turretComp.GetWarFundCost());
+                GameManager.Instance.ChangeWarFunds(-turretComp.GetWarFundCost());
                 _isOccupied = true;
                 _placementParticules.gameObject.SetActive(!_isOccupied);
                 Debug.Log("Placed");
                 GameObject Turret = Instantiate(turret, transform);
                 Turret.transform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z);
-
 
                 if (_placeParticules != null)
                 {

@@ -3111,10 +3111,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
+  _deathExplosion: {fileID: 1607087973141098480, guid: 4a80237c01a792e479ac930c02b28a42,
+    type: 3}
   agent: {fileID: 4200010804199361983}
+  animator: {fileID: 0}
   _health: 10
   _defaultHealth: 0
-  _warFund: 10
+  _warFundValue: 20
+  _cleanUpTime: 5
+  _isDead: 0
 --- !u!195 &4200010804199361983
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -61,6 +61,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
 
         NavMeshAgent navMeshAgentComp = enemyToReuse.GetComponent<NavMeshAgent>();
         navMeshAgentComp.Warp(_spawnPoint.transform.position);
+        navMeshAgentComp.enabled = true;
         navMeshAgentComp.SetDestination(_theHQ.transform.position);
     }
 

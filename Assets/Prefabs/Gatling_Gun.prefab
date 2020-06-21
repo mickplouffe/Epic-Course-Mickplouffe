@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2734808148871730210}
-  - component: {fileID: 2699720121456369572}
   m_Layer: 0
   m_Name: Rotate
   m_TagString: Untagged
@@ -33,26 +32,6 @@ Transform:
   m_Father: {fileID: 2732633096315932334}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2699720121456369572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2735971150218660834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c5f2997965e834caae320f30b7d662, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rotationSpeed: 4
-  _range: 50
-  _viewAngle: 35
-  _fireRateDelay: 0.5
-  _damageDealing: 1
-  atkRangeSphere: {fileID: 4965139397976558725}
-  _isTargetLocked: 0
-  _fireRateCooldown: 0
 --- !u!1 &2735971845154655124
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +204,8 @@ GameObject:
   - component: {fileID: 2624212029573025144}
   - component: {fileID: 2655566391731437640}
   - component: {fileID: 2807275071275101534}
+  - component: {fileID: 9169676471499449003}
+  - component: {fileID: -2363504263115665800}
   m_Layer: 0
   m_Name: Gatling_Gun
   m_TagString: Untagged
@@ -256,11 +237,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2736260628701335162}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11c7edd4816764b2cb111ea15f8f117a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gunBarrel: {fileID: 2732889675216846176}
   Muzzle_Flash: {fileID: 2736766161735299740}
   bulletCasings: {fileID: 2827271654577701534}
   fireSound: {fileID: 8300000, guid: 08e0cb88300e54b09aa0deb684c3a3de, type: 3}
@@ -372,8 +354,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ace8af70ca4b5e4b91eff4c0e2a4a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turretTargeting: {fileID: 2699720121456369572}
   _warFundCost: 200
+--- !u!114 &9169676471499449003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2736260628701335162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c5f2997965e834caae320f30b7d662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 4
+  _range: 50
+  _viewAngle: 40
+  _rotationObj: {fileID: 2735971150218660834}
+  atkRangeSphere: {fileID: 4965139397976558725}
+  behaviourScript: {fileID: -2363504263115665800}
+  _isTargetLocked: 0
+--- !u!114 &-2363504263115665800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2736260628701335162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c463e9b29448343bdb0976339e00b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fireRateDelay: 0.2
+  gatlingScript: {fileID: 2624212029573025144}
+  _damageDealing: 1
 --- !u!1 &2736347491043900704
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,8 +12,7 @@ public class TheHQ : MonoSingleton<TheHQ>
             _health--;
             if (_health < 0)
                 _health = 0;
-            HUDController.Instance.UpdateHUD("lives");
-            GameManager.Instance.ChangeWarFunds(5);
+            HUDController.Instance.UpdateHUD("lives");            
             other.gameObject.SetActive(false);
         }
     }
