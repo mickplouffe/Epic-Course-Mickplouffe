@@ -9,7 +9,7 @@ public class Enemies : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] int _health = 1, _defaultHealth, _warFundValue = 10;
     [SerializeField] float _cleanUpTime = 5;
-    [SerializeField] bool _isDead = false;
+    [SerializeField] bool _isDead = false, _isDissolved = false;
 
 
     private void OnEnable()
@@ -19,6 +19,8 @@ public class Enemies : MonoBehaviour
         {
             _target = GameObject.Find("TheHQ");
         }
+
+
         //agent.SetDestination(_target.transform.position);
 
     }
@@ -40,11 +42,20 @@ public class Enemies : MonoBehaviour
             Instantiate(_deathExplosion, transform.position + Vector3.up, Quaternion.identity);
 
         _collider.enabled = false;
-        Invoke("Diying", _cleanUpTime);
+        Invoke("Dissolving", _cleanUpTime);
+
+    }
+    void Dissolving()
+    {
+        if (animator != null)
+            animator.SetBool("isDissolved", true);
+        Invoke("Diying", 3);
+
+
     }
 
     void Diying()
-    {       
+    {
 
         gameObject.transform.position = Vector3.down * 20;
 
@@ -61,9 +72,14 @@ public class Enemies : MonoBehaviour
 
     }
 
+
+
     void Hide()
     {
-        this.gameObject.SetActive(false);       
+
+        this.gameObject.SetActive(false);
+        animator.SetBool("isDissolved", false);
+
 
     }
 

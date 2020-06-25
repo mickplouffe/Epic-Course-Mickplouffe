@@ -1095,6 +1095,7 @@ MonoBehaviour:
   _warFundValue: 10
   _cleanUpTime: 5
   _isDead: 0
+  _isDissolved: 0
 --- !u!195 &5041635498737228247
 NavMeshAgent:
   m_ObjectHideFlags: 0
