@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,15 +15,33 @@ public class CameraController : MonoBehaviour
     [SerializeField] int borderMargin = 5;
     GameObject _placeHolder;
     Vector2 mousePosition;
+    Vector2 panningAxis;
+
+    public static Action DeselectAll;
+
+    private void Start()
+    {
+            StartCoroutine(HoldingPan());
+
+    }
 
 
     public void OnPan(InputAction.CallbackContext ctx)
     {
-        if (ctx.started || ctx.canceled)
+        if (ctx.started)
         {
-            Vector2 axis = ctx.ReadValue<Vector2>();
-            moveCenterFocus(new Vector3(axis.x, 0, axis.y));
+            panningAxis = ctx.ReadValue<Vector2>();
+            //StartCoroutine(HoldingPan());
+
         }
+        else if (ctx.canceled)
+        {
+             panningAxis = ctx.ReadValue<Vector2>();
+             //StopCoroutine(HoldingPan());
+
+
+        }
+
     }
 
     public void OnPoint(InputAction.CallbackContext ctx)
@@ -51,15 +70,68 @@ public class CameraController : MonoBehaviour
 
     public void OnZoom(InputAction.CallbackContext ctx)
     {
-        Debug.Log(ctx.ReadValue<Vector2>().ToString());
-        if (ctx.ReadValue<Vector2>().y > 0 && ctx.started)
+        if (ctx.started || ctx.canceled)
         {
-            moveCenterFocus(Vector3.down / 2);
+            if (ctx.ReadValue<Vector2>().y > 0)
+            {
+                moveCenterFocus(Vector3.down);
+            }
+
+            if (ctx.ReadValue<Vector2>().y < 0)
+            {
+                moveCenterFocus(Vector3.up);
+            }
         }
 
-        if (ctx.ReadValue<Vector2>().y < 0 && ctx.started)
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            moveCenterFocus(Vector3.up / 2);
+            Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(rayOrigin, out hitInfo))
+            {
+                DeselectAll?.Invoke();
+
+                if (hitInfo.transform.tag == "TurretSpot")
+                {
+                    if (hitInfo.transform.childCount == 2)
+                    {
+                        Debug.LogError("HIT A TURRET!!!");
+                        if (hitInfo.transform.GetChild(1))
+                        {
+                            hitInfo.transform.GetChild(1).GetComponent<Turret>().OnSelect();
+                            //hitInfo.transform.GetComponent<TurretSpot>().UpgradeTower();
+                        }
+
+                        //Select turret
+
+                    }
+                }
+
+                if (hitInfo.transform.name == "UpgradeYes")
+                {
+                    hitInfo.transform.GetComponentInParent<TurretSpot>().UpgradeTower();
+                }
+                else if (hitInfo.transform.name == "DismantleYes")
+                {
+                    hitInfo.transform.GetComponentInParent<TurretSpot>().DestroyTower();
+
+                }
+            }
+        }
+
+    }
+
+
+    IEnumerator HoldingPan()
+    {
+        while (true)
+        {
+            moveCenterFocus(new Vector3(panningAxis.x, 0, panningAxis.y));
+            yield return new WaitForSecondsRealtime(.05f);
         }
 
     }

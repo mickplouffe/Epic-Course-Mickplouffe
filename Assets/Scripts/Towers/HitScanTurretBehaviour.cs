@@ -19,7 +19,10 @@ public class HitScanTurretBehaviour : MonoBehaviour
     {
         if (target != null)
         {
-            gatlingScript.SHOOT(true);
+            if (gatlingScript != null) 
+                gatlingScript.SHOOT(true);
+
+            
 
             if (!_fireRateCooldown)
             {
@@ -31,7 +34,8 @@ public class HitScanTurretBehaviour : MonoBehaviour
         }
         else
         {
-            gatlingScript.SHOOT(false);
+            if (gatlingScript != null)
+                gatlingScript.SHOOT(false);
 
         }
         

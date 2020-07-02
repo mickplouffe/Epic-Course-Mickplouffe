@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 /// <summary>
@@ -9,7 +7,8 @@ using UnityEngine;
 public class TurretTargeting : MonoBehaviour
 {
     [SerializeField] float _rotationSpeed = 1, _range = 100, _viewAngle = 15;
-    [SerializeField] GameObject _rotationObj, atkRangeSphere;
+    [SerializeField] GameObject _rotationObj;
+    public GameObject atkRangeSphere;
     public HitScanTurretBehaviour behaviourScript;
     [SerializeField] bool _isTargetLocked = false;
     GameObject _target;
@@ -17,8 +16,6 @@ public class TurretTargeting : MonoBehaviour
     private void Start()
     {
         UpdateAtkRange();
-
-        Invoke("OnSelected", 2);
     }
 
     void Update()
@@ -28,13 +25,19 @@ public class TurretTargeting : MonoBehaviour
 
     void UpdateAtkRange()
     {
-        atkRangeSphere.transform.localScale = new Vector3(_range,_range,_range) / 4;
+        atkRangeSphere.transform.localScale = new Vector3(_range, _range, _range) / 3;
     }
 
-    private void OnSelected() //I the turret is selected, Show range, Else do not.
+    public void OnSelected() //I the turret is selected, Show range, Else do not.
+    {
+        UpdateAtkRange();
+        atkRangeSphere.SetActive(true);
+    }
+
+    public void OnDeselected() //I the turret is selected, Show range, Else do not.
     {
         atkRangeSphere.SetActive(false);
-    } 
+    }
 
     private void Aiming()
     {
@@ -88,7 +91,7 @@ public class TurretTargeting : MonoBehaviour
             Vector3 dirToTarget = (new Vector3(_target.transform.position.x, 0, _target.transform.position.z) - new Vector3(_rotationObj.transform.position.x, 0, _rotationObj.transform.position.z)).normalized;
             if (Vector3.Angle(_rotationObj.transform.forward, dirToTarget) < _viewAngle / 2)
                 return true;
-            
+
         }
         return false;
 

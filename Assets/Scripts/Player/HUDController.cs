@@ -13,6 +13,7 @@ public class HUDController : MonoSingleton<HUDController>
 
     public static Action<bool> PlacingTurret;
 
+
     private void Start()
     {
         UpdateHUD();

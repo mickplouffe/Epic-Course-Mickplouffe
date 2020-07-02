@@ -29,9 +29,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Fade: 0.61
-    - _Glow: 0.2
-    - _Scale: 300
+    - _Fade: 0.32
+    - _Glow: 0.01
+    - _Scale: 112.72
     m_Colors:
     - _GlowColour: {r: 0.10980392, g: 2, b: 0, a: 1}
     - _coreColor: {r: 0.21568628, g: 0.2901961, b: 0.8235294, a: 0}

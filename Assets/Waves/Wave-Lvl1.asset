@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b464facffb0d0449a8750ab672572a7, type: 3}
   m_Name: Wave-Lvl1
   m_EditorClassIdentifier: 
+  _firstWaveDelay: 5
   _subWaves:
   - _subWaveName: The begining
     _enemyComposition:

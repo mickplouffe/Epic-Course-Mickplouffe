@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemies : MonoBehaviour
+public class Enemies : MonoBehaviour, IDamagable
 {
     public GameObject _target, _deathExplosion;
     public NavMeshAgent agent;
     BoxCollider _collider;
     [SerializeField] Animator animator;
-    [SerializeField] int _health = 1, _defaultHealth, _warFundValue = 10;
+
+    [field: SerializeField]
+    public int Health { get; set; }
+
+    [SerializeField] int _defaultHealth, _warFundValue = 10;
     [SerializeField] float _cleanUpTime = 5;
     [SerializeField] bool _isDead = false, _isDissolved = false;
 
@@ -20,9 +24,6 @@ public class Enemies : MonoBehaviour
             _target = GameObject.Find("TheHQ");
         }
 
-
-        //agent.SetDestination(_target.transform.position);
-
     }
 
     private void Start()
@@ -30,7 +31,7 @@ public class Enemies : MonoBehaviour
         animator = GetComponent<Animator>();
         _collider = GetComponent<BoxCollider>();
 
-        _defaultHealth = _health;
+        _defaultHealth = Health;
         agent.SetDestination(_target.transform.position);
     }
 
@@ -41,15 +42,17 @@ public class Enemies : MonoBehaviour
         if (_deathExplosion != null)
             Instantiate(_deathExplosion, transform.position + Vector3.up, Quaternion.identity);
 
+
         _collider.enabled = false;
+        if (animator != null)
+            animator.SetBool("isDissolved", true);
         Invoke("Dissolving", _cleanUpTime);
 
     }
     void Dissolving()
     {
-        if (animator != null)
-            animator.SetBool("isDissolved", true);
-        Invoke("Diying", 3);
+        
+        Invoke("Diying", 0);
 
 
     }
@@ -62,7 +65,7 @@ public class Enemies : MonoBehaviour
         if (animator != null)
             animator.SetBool("isDead", false);
 
-        _health = _defaultHealth;
+        Health = _defaultHealth;
 
         gameObject.tag = "Enemy";
 
@@ -85,13 +88,13 @@ public class Enemies : MonoBehaviour
 
     public void TakeDamage(int dmg = 1)
     {
-        _health -= dmg;   
+        Health -= dmg;   
 
-        if (_health <= 0)
-        {
-            
+        if (Health <= 0)
+        {           
             
             gameObject.tag = "DeadEnemy";
+
             if (animator != null)
                 animator.SetBool("isDead", true);
 

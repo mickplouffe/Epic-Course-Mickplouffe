@@ -18,7 +18,6 @@ public class TurretSpot : MonoBehaviour
                 GameManager.Instance.ChangeWarFunds(-turretComp.GetWarFundCost());
                 _isOccupied = true;
                 _placementParticules.gameObject.SetActive(!_isOccupied);
-                Debug.Log("Placed");
                 GameObject Turret = Instantiate(turret, transform);
                 Turret.transform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z);
 
@@ -28,6 +27,55 @@ public class TurretSpot : MonoBehaviour
                     PlaceParticles.transform.position = transform.position;
                 }
             }
+        }
+    }
+
+    public void UpgradeTower()
+    {
+        if (transform.childCount == 2)
+        {
+            GameObject turretUpgrade = transform.GetChild(1).GetComponent<Turret>().UpgradeTurret;
+            Turret turretComp = turretUpgrade.GetComponent<Turret>();
+            if ((GameManager.Instance.GetWarFunds() - turretComp.GetWarFundCost()) >= 0)
+            {
+                GameManager.Instance.ChangeWarFunds(-turretComp.GetWarFundCost());
+                _isOccupied = true;
+                _placementParticules.gameObject.SetActive(!_isOccupied);
+                GameObject Turret = Instantiate(turretUpgrade, transform);
+                Turret.transform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z);
+
+                DestroyCurrentTower();
+
+                if (_placeParticules != null)
+                {
+                    ParticleSystem PlaceParticles = Instantiate(_placeParticules);
+                    PlaceParticles.transform.position = transform.position;
+                }
+            }
+        }        
+    }
+
+    public void DestroyCurrentTower()
+    {
+        if (transform.childCount == 3)
+        {
+            Destroy(transform.GetChild(1).transform.gameObject);
+        }
+    }
+
+    public void DestroyTower()
+    {
+        if (transform.childCount > 1)
+        {
+            GameManager.Instance.ChangeWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().GetWarFundCost()/2));
+            
+            Destroy(transform.GetChild(1).transform.gameObject);
+
+            _isOccupied = false;
+
+            _placementParticules.gameObject.SetActive(!_isOccupied);
+
+
         }
     }
 
