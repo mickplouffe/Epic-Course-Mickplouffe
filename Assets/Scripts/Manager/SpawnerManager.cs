@@ -21,7 +21,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             instSpawning = StartCoroutine(Spawning());
         }

@@ -53,3 +53,94 @@ MonoBehaviour:
     - enemyTypeName: Meka2
       nextSpawnDelay: 0.6
     _nextWaveDelay: 5
+  - _subWaveName: Boss!!!
+    _enemyComposition:
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    _nextWaveDelay: 5
+  - _subWaveName: Boss!!!
+    _enemyComposition:
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    _nextWaveDelay: 5
+  - _subWaveName: Boss!!!
+    _enemyComposition:
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    _nextWaveDelay: 5
+  - _subWaveName: Boss!!!
+    _enemyComposition:
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    _nextWaveDelay: 5
+  - _subWaveName: Boss!!!
+    _enemyComposition:
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    _nextWaveDelay: 5
+  - _subWaveName: Boss!!!
+    _enemyComposition:
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    _nextWaveDelay: 5
+  - _subWaveName: Boss!!!
+    _enemyComposition:
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    - enemyTypeName: Meka2
+      nextSpawnDelay: 0.6
+    _nextWaveDelay: 5
