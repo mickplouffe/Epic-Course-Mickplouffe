@@ -2535,7 +2535,6 @@ MonoBehaviour:
   _isRandomSpawn: 0
   _waves:
   - {fileID: 11400000, guid: 69b71a22851034d42b79d60ca9d435e5, type: 2}
-  - {fileID: 11400000, guid: 238caea8fcf2d3e4caf17bb7bf6ef8dd, type: 2}
 --- !u!1001 &184523878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5473,7 +5472,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: -0.5606288, y: -0.00000016234188, z: 0.00000023552931, w: -0.8280673}
+  m_LocalRotation: {x: -0.5606288, y: -0.00000016234186, z: 0.0000002355293, w: -0.8280673}
   m_LocalPosition: {x: -23.83, y: 13, z: -9.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -7207,7 +7206,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704569479}
-  m_LocalRotation: {x: -0.5606288, y: -0.00000016234188, z: 0.00000023552931, w: -0.8280673}
+  m_LocalRotation: {x: -0.5606288, y: -0.00000016234186, z: 0.0000002355293, w: -0.8280673}
   m_LocalPosition: {x: -23.83, y: 13, z: -9.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
