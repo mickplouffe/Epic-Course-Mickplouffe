@@ -10,7 +10,7 @@ public class TurretTargeting : MonoBehaviour
     [SerializeField] GameObject _rotationObj;
     public GameObject atkRangeSphere;
     public HitScanTurretBehaviour behaviourScript;
-    [SerializeField] bool _isTargetLocked = false;
+    //[SerializeField] bool _isTargetLocked = false;
     GameObject _target;
 
     private void Start()

@@ -11,13 +11,16 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
 {
     [SerializeField] GameObject _spawnPoint, _theHQ, _enemiesContainer;
     [SerializeField] float _defaultSpawnDelay = 1, _defaultWaveDelay = 10;
-    [SerializeField] List<GameObject> enemies;
+    [SerializeField] List<GameObject> _enemies;
     [SerializeField] bool _isRandomSpawn;
 
     [SerializeField] List<Wave> _waves;
 
     //--- IENumerator Init ---//
     Coroutine instSpawning = null;
+
+    private void OnEnable() => GameManager.resetGameEvent += ResetSpawnerManager;
+    private void OnDisable() => GameManager.resetGameEvent -= ResetSpawnerManager;
 
     void Update()
     {
@@ -32,9 +35,28 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         }
     }
 
+    public void SetEnemyList(List<GameObject> enemiesList)
+    {
+        _enemies = enemiesList;
+    }
+
+    public void SetWaveList(List<Wave> waveList)
+    {
+        _waves = waveList;
+    }
+
+    void ResetSpawnerManager()
+    {
+        if (instSpawning != null)
+        {
+            StopSpawn();
+
+        }
+    }
+
     void Spawn(string enemyType = null)
     {
-        GameObject foundEnemy = enemies.FirstOrDefault(i => i.name == enemyType);
+        GameObject foundEnemy = _enemies.FirstOrDefault(i => i.name == enemyType);
         GameObject enemyInst;
 
         if (foundEnemy != null)
@@ -43,7 +65,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         }
         else
         {
-            enemyInst = Instantiate(enemies[Random.Range(0, enemies.Count)]);
+            enemyInst = Instantiate(_enemies[Random.Range(0, _enemies.Count)]);
 
         }
         enemyInst.GetComponent<NavMeshAgent>().Warp(_spawnPoint.transform.position);
@@ -51,11 +73,14 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         PoolManager.Instance.AddEnemyToPool(enemyInst);
     }
 
+    void StopSpawn() => StopCoroutine(instSpawning);
+ 
+
     void Reuse(GameObject enemyToReuse = null)
     {
         if (enemyToReuse == null)
         {
-            enemyToReuse = enemies[Random.Range(0, enemies.Count)];
+            enemyToReuse = _enemies[Random.Range(0, _enemies.Count)];
         }
         enemyToReuse.SetActive(true);
 

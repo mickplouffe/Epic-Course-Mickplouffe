@@ -87,6 +87,11 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        ClickOnScreen();
+    }
+
+    private void ClickOnScreen()
+    {
         if (Input.GetMouseButtonDown(0))
         {
             Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -99,32 +104,23 @@ public class CameraController : MonoBehaviour
                 {
                     if (hitInfo.transform.childCount == 2)
                     {
-                        Debug.LogError("HIT A TURRET!!!");
                         if (hitInfo.transform.GetChild(1))
                         {
                             hitInfo.transform.GetChild(1).GetComponent<Turret>().OnSelect();
                             //hitInfo.transform.GetComponent<TurretSpot>().UpgradeTower();
                         }
-
                         //Select turret
-
                     }
                 }
 
-                if (hitInfo.transform.name == "UpgradeYes")
-                {
+                if (hitInfo.transform.name == "UpgradeYes")                
                     hitInfo.transform.GetComponentInParent<TurretSpot>().UpgradeTower();
-                }
+                
                 else if (hitInfo.transform.name == "DismantleYes")
-                {
-                    hitInfo.transform.GetComponentInParent<TurretSpot>().DestroyTower();
-
-                }
+                    hitInfo.transform.GetComponentInParent<TurretSpot>().DestroyTower();                
             }
         }
-
     }
-
 
     IEnumerator HoldingPan()
     {

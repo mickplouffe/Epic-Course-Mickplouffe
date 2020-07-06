@@ -1,24 +1,17 @@
 ﻿using System;
 using UnityEngine;
 
-public class TheHQ : MonoSingleton<TheHQ>
+public class TheHQ : MonoBehaviour
 {
-    [SerializeField] int _health = 100;
+    public static Action<int> HQDamaged;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Enemy")
         {
-            _health--;
-            if (_health < 0)
-                _health = 0;
-            HUDController.Instance.UpdateHUD("lives");            
-            other.gameObject.SetActive(false);
+            Enemies otherEnemy = other.GetComponent<Enemies>();
+            HQDamaged?.Invoke(otherEnemy.GetBodyDamage());
+            otherEnemy.ResetEnemy();
         }
-    }
-
-    public int GetHealth()
-    {
-        return _health;
     }
 }

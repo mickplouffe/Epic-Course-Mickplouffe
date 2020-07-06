@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b43ff54af0fc8d04ab37872c6c13f3bc, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: 
+  defaultTimeScale: 1
+  defaultCameraCenterFocusSpeed: 10
+  defaultWarFund: 2000
+  endPointHealth: 100
+  defaultEnemies:
+  - {fileID: 5040281597148208240, guid: dd36fdc63ce8016439173045ea1b5778, type: 3}
+  - {fileID: 7572073603120740025, guid: 837d3cebf0432b147b8de9a92384dd5a, type: 3}
+  DefaultWaves:
+  - {fileID: 11400000, guid: 69b71a22851034d42b79d60ca9d435e5, type: 2}

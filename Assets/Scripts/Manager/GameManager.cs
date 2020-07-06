@@ -3,34 +3,29 @@ using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
+    [Header("General Settings")]
+    [SerializeField] LevelSettings currentLevelSettings;
     [SerializeField] bool _isSpawnerEnabled;
-    [SerializeField] int warFund = 400;
+    [SerializeField] int warFund = 400, _health = 100;
+
+    [Header("Time Scale Settings")]
     [SerializeField] float fixedFimestep = 0.02f;
+    [SerializeField] [Range(0.0f, 10.0f)] float defaultTimeScale;
+    [SerializeField] [Range(0.0f, 10.0f)] float currentTimeScale;
 
-    [Range(0.0f, 10.0f)]
-    [SerializeField] float defaultTimeScale, currentTimeScale;
 
-    public static Action<int> WarFundEvent;
-
-    [SerializeField] float warFundAnimationTime = 1.5f;
-    float desiredFunds, initialFunds, currentFunds;
+    public static Action resetGameEvent;
 
     private void OnEnable()
     {
-        WarFundEvent += ChangeWarFunds;
+        TheHQ.HQDamaged += ChangeHealth;
         defaultTimeScale = Time.timeScale;
         currentTimeScale = defaultTimeScale;
-        currentFunds = warFund;
-        desiredFunds = currentFunds;
-        //https://www.youtube.com/watch?v=1r_BXVRjXvI
     }
-
-    private void Update()
+    private void OnDisable()
     {
-        WarfundAnimation();
+        TheHQ.HQDamaged -= ChangeHealth;
     }
-
-    private void OnDisable() => WarFundEvent -= ChangeWarFunds;
 
     // Start is called before the first frame update
     void Start()
@@ -47,23 +42,30 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    public void ChangeWarFunds(int amountToChange)
+    public void AddWarFunds(int amountToChange)
     {
-        initialFunds = warFund;
         warFund += amountToChange;
 
-        if (warFund < 0)
-        {
+        if (warFund < 0)        
             warFund = 0;
-        }
-        desiredFunds = warFund;
-                
-        HUDController.Instance.UpdateHUD("funds");
+
+        HUDController.Instance.UpdateWarFund();
+
+    }
+
+    public void SetWarFunds(int newAmount)
+    {
+        warFund = newAmount;
+
+        if (warFund < 0)        
+            warFund = 0;
+
+        HUDController.Instance.UpdateWarFund();
     }
 
     public int GetWarFunds()
     {
-        return Mathf.RoundToInt(currentFunds);
+        return warFund;
     }
 
     public float GetFixedTimestep()
@@ -102,26 +104,34 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    void WarfundAnimation()
+    public void ChangeHealth(int HealthAmount = 1)
     {
-        if (currentFunds != desiredFunds)
-        {
-            if (initialFunds < desiredFunds)
-            {
-                currentFunds += (warFundAnimationTime * Time.fixedDeltaTime) * (desiredFunds - initialFunds);
-                if (currentFunds >= desiredFunds)
-                    currentFunds = desiredFunds;
-            }
-            else
-            {
-                currentFunds -= (warFundAnimationTime * Time.fixedDeltaTime) * (initialFunds - desiredFunds);
-                if (currentFunds <= desiredFunds)
-                    currentFunds = desiredFunds;
-            }
-
-            HUDController.Instance.UpdateHUD("funds");
-
-        }
+        _health -= HealthAmount;
+        if (_health < 0)
+            _health = 0;
+        HUDController.Instance.UpdateHUD("lives");
     }
 
+    public void setHealth(int newHealth) => _health = newHealth;
+
+    public int GetHealth()
+    {
+        return _health;
+    }
+
+
+    public void ResetGameSettings()
+    {
+        resetGameEvent?.Invoke();
+        SetWarFunds(currentLevelSettings.defaultWarFund);
+        ChangeHealth(currentLevelSettings.endPointHealth);
+        GameManager.Instance.setHealth(currentLevelSettings.endPointHealth);
+
+        ChangeTimeScale(currentLevelSettings.defaultTimeScale);
+        SpawnerManager.Instance.SetEnemyList(currentLevelSettings.defaultEnemies);
+        SpawnerManager.Instance.SetWaveList(currentLevelSettings.DefaultWaves);
+
+        HUDController.Instance.UpdateHUD();
+
+    }
 }

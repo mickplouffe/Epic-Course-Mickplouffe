@@ -5,8 +5,19 @@ public class TurretSpot : MonoBehaviour
     [SerializeField] ParticleSystem _placeParticules, _dismantleParticles, _placementParticules;
     [SerializeField] bool _isOccupied;
 
-    private void OnEnable() => HUDController.PlacingTurret += PlacementParticules;
-    private void OnDisable() => HUDController.PlacingTurret -= PlacementParticules;
+    private void OnEnable()
+    {
+        HUDController.PlacingTurret += PlacementParticules;
+        GameManager.resetGameEvent += ResetTurretSpot;
+
+    }
+
+    private void OnDisable()
+    {
+        HUDController.PlacingTurret -= PlacementParticules;
+        GameManager.resetGameEvent -= ResetTurretSpot;
+
+    }
 
     public void PlaceTower(GameObject turret)
     {
@@ -15,7 +26,8 @@ public class TurretSpot : MonoBehaviour
             Turret turretComp = turret.GetComponent<Turret>();
             if ((GameManager.Instance.GetWarFunds() - turretComp.GetWarFundCost()) >= 0)
             {
-                GameManager.Instance.ChangeWarFunds(-turretComp.GetWarFundCost());
+                GameManager.Instance.AddWarFunds(-turretComp.GetWarFundCost());
+
                 _isOccupied = true;
                 _placementParticules.gameObject.SetActive(!_isOccupied);
                 GameObject Turret = Instantiate(turret, transform);
@@ -38,7 +50,7 @@ public class TurretSpot : MonoBehaviour
             Turret turretComp = turretUpgrade.GetComponent<Turret>();
             if ((GameManager.Instance.GetWarFunds() - turretComp.GetWarFundCost()) >= 0)
             {
-                GameManager.Instance.ChangeWarFunds(-turretComp.GetWarFundCost());
+                GameManager.Instance.AddWarFunds(-turretComp.GetWarFundCost());
                 _isOccupied = true;
                 _placementParticules.gameObject.SetActive(!_isOccupied);
                 GameObject Turret = Instantiate(turretUpgrade, transform);
@@ -67,7 +79,7 @@ public class TurretSpot : MonoBehaviour
     {
         if (transform.childCount > 1)
         {
-            GameManager.Instance.ChangeWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().GetWarFundCost()/2));
+            GameManager.Instance.AddWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().GetWarFundCost()/2));
             
             Destroy(transform.GetChild(1).transform.gameObject);
 
@@ -100,5 +112,20 @@ public class TurretSpot : MonoBehaviour
                 _placementParticules.Stop();
             }
         }
+    }
+
+    void ResetTurretSpot()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (i != 0)
+            {
+                Destroy(transform.GetChild(i).transform.gameObject);
+
+            }
+        }
+        _isOccupied = false;
+
+        _placementParticules.gameObject.SetActive(!_isOccupied);
     }
 }
