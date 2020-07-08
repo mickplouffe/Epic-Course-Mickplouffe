@@ -11,24 +11,17 @@ public class Enemies : MonoBehaviour, IDamagable
     [field: SerializeField]
     public int Health { get; set; }
 
-    [SerializeField] int _defaultHealth, _warFundValue = 10, _bulletDamage = 1, _bodyDamage = 1;
+    [SerializeField] int _defaultHealth, _warFundValue = 10, _bodyDamage = 1;
     [SerializeField] float _cleanUpTime = 5;
-    [SerializeField] bool _isDead = false, _isDissolved = false;
 
     private void OnEnable()
     {
         GameManager.resetGameEvent += ResetEnemy;
-
-
-        if (_target == null)
-        {
-            _target = GameObject.Find("TheHQ");
-        }
-
+        if (_target == null)        
+            _target = GameObject.Find("TheHQ");    
     }
 
     private void OnDisable() => GameManager.resetGameEvent -= ResetEnemy;
-
 
     private void Start()
     {
@@ -53,10 +46,7 @@ public class Enemies : MonoBehaviour, IDamagable
         Invoke("Dissolving", _cleanUpTime);
 
     }
-    void Dissolving()
-    {        
-        Invoke("Diying", 0);
-    }
+    void Dissolving() => Invoke("Diying", 0);    
 
     void Diying()
     {
@@ -107,5 +97,4 @@ public class Enemies : MonoBehaviour, IDamagable
         Health = 1;
         TakeDamage();
     }
-
 }

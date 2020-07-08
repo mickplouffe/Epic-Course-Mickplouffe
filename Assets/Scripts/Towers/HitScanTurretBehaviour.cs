@@ -5,7 +5,7 @@ using GameDevHQ.FileBase.Gatling_Gun;
 public class HitScanTurretBehaviour : MonoBehaviour
 {
     [SerializeField] float _fireRateDelay = 1;
-    [SerializeField] Gatling_Gun gatlingScript;
+    [SerializeField] Gatling_Gun gatlingScript; //Change to Global Shooting methode
     bool _fireRateCooldown;
     [SerializeField] int _damageDealing = 1;
 

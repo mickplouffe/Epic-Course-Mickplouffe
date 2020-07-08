@@ -518,7 +518,6 @@ GameObject:
   - component: {fileID: 2010337862266141741}
   - component: {fileID: 6602682602196069380}
   - component: {fileID: 5652288911505286011}
-  - component: {fileID: 4843260091023017890}
   - component: {fileID: 1204094442204809834}
   m_Layer: 0
   m_Name: Missile_Launcher_Dual_Turret
@@ -579,23 +578,7 @@ MonoBehaviour:
   _viewAngle: 110
   _rotationObj: {fileID: 2010337862266101771}
   atkRangeSphere: {fileID: 3172463054103850715}
-  behaviourScript: {fileID: 4843260091023017890}
-  _isTargetLocked: 0
---- !u!114 &4843260091023017890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2010337862266101773}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63c463e9b29448343bdb0976339e00b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fireRateDelay: 1
-  gatlingScript: {fileID: 0}
-  _damageDealing: 5
+  behaviourScript: {fileID: 0}
 --- !u!95 &1204094442204809834
 Animator:
   serializedVersion: 3

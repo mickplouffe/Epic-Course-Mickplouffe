@@ -1086,7 +1086,7 @@ GameObject:
   - component: {fileID: 7949831016831715507}
   - component: {fileID: 2717251769327699142}
   - component: {fileID: 7885305721592178843}
-  - component: {fileID: 6616774724995267096}
+  - component: {fileID: 5718331162816579584}
   - component: {fileID: 5962903750023673315}
   m_Layer: 0
   m_Name: Missile_Launcher
@@ -1173,23 +1173,19 @@ MonoBehaviour:
   _viewAngle: 90
   _rotationObj: {fileID: 8052910476366689123}
   atkRangeSphere: {fileID: 2347987531304068063}
-  behaviourScript: {fileID: 6616774724995267096}
-  _isTargetLocked: 0
---- !u!114 &6616774724995267096
+  behaviourScript: {fileID: 0}
+--- !u!114 &5718331162816579584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8053202391292973717}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63c463e9b29448343bdb0976339e00b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ad53a744b4a9af4c839a78f5121c21e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireRateDelay: 1
-  gatlingScript: {fileID: 0}
-  _damageDealing: 3
 --- !u!95 &5962903750023673315
 Animator:
   serializedVersion: 3

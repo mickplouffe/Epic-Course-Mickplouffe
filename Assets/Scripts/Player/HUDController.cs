@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
 
 public class HUDController : MonoSingleton<HUDController>
 {
@@ -30,6 +32,11 @@ public class HUDController : MonoSingleton<HUDController>
     [SerializeField] float warFundAnimationTime = 1.5f;
     float desiredFunds, initialFunds, currentFunds;
 
+    //--- IENumerator Init ---//
+    Coroutine instCountDown = null;
+
+    //ControlScheme controlScheme;
+
     public static Action<bool> PlacingTurret;
     public static Action<Color> UIColoration;
 
@@ -54,7 +61,7 @@ public class HUDController : MonoSingleton<HUDController>
     {
         if (_placeHolder != null)
         {
-            Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition); //controlScheme.UI.Point.ReadValue<Vector2>()
             RaycastHit hitInfo;
             if (Physics.Raycast(rayOrigin, out hitInfo))
             {
@@ -63,7 +70,7 @@ public class HUDController : MonoSingleton<HUDController>
 
                     _placeHolder.transform.position = new Vector3(hitInfo.transform.position.x, hitInfo.transform.position.y + .5f, hitInfo.transform.position.z);
 
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0))//controlScheme.UI.Click.ReadValue<bool>()
                     {
                         if (_placeHolder.name == "Gatling_Gun_PlaceHolder(Clone)")
                         {
@@ -204,7 +211,6 @@ public class HUDController : MonoSingleton<HUDController>
                 //_wavesCount.text = WaveManager.Instance.GetCurrentWave().ToString();
                 _warFundCount.text = currentFunds.ToString().ToString();
                 HealthStatus();
-
                 break;
         }
     }
@@ -255,7 +261,6 @@ public class HUDController : MonoSingleton<HUDController>
     {
         initialFunds = currentFunds;
         desiredFunds = GameManager.Instance.GetWarFunds();
-        Debug.LogError("Update?");
     }
 
     void WarFundAnimation()
@@ -278,6 +283,29 @@ public class HUDController : MonoSingleton<HUDController>
             UpdateHUD("funds");
 
         }
+    }
+
+    public void WaveStartTimer(int time)
+    {
+        titleText.gameObject.SetActive(true);
+        instCountDown = StartCoroutine(StartingWaveCountDown(time));
+    }
+
+    public void WaveStopTimer()
+    {
+        StopCoroutine(instCountDown);
+        titleText.gameObject.SetActive(false);
+    }
+
+    IEnumerator StartingWaveCountDown(int time)
+    {
+        for (int i = time; i > 0; i--)
+        {
+            titleText.text = i.ToString();
+            yield return new WaitForSeconds(1);
+        }
+        SpawnerManager.Instance.StartSpawning();
+        WaveStopTimer();
     }
 }
 

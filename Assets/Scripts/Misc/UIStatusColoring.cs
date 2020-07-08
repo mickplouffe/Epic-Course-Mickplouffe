@@ -17,7 +17,7 @@ public class UIStatusColoring : MonoBehaviour
     void UpdateColoring(Color newColor) => theNewColor = newColor;
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (imgComponent != null)
             if (theNewColor != imgComponent.color)

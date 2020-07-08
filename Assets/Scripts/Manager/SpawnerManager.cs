@@ -26,7 +26,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            instSpawning = StartCoroutine(Spawning());
+            HUDController.Instance.WaveStartTimer(5);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -73,6 +73,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         PoolManager.Instance.AddEnemyToPool(enemyInst);
     }
 
+    public void StartSpawning() => instSpawning = StartCoroutine(Spawning());
     void StopSpawn() => StopCoroutine(instSpawning);
  
 

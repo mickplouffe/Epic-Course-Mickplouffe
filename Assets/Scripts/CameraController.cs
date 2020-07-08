@@ -14,15 +14,20 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] int borderMargin = 5;
     GameObject _placeHolder;
-    Vector2 mousePosition;
+    public Vector2 mousePosition;
     Vector2 panningAxis;
 
     public static Action DeselectAll;
 
     private void Start()
     {
-            StartCoroutine(HoldingPan());
+        //controlScheme = ;
+        StartCoroutine(HoldingPan());
+    }
 
+    private void Update()
+    {
+        ClickOnScreen();
     }
 
 
@@ -32,14 +37,11 @@ public class CameraController : MonoBehaviour
         {
             panningAxis = ctx.ReadValue<Vector2>();
             //StartCoroutine(HoldingPan());
-
         }
         else if (ctx.canceled)
         {
-             panningAxis = ctx.ReadValue<Vector2>();
-             //StopCoroutine(HoldingPan());
-
-
+            panningAxis = ctx.ReadValue<Vector2>();
+            //StopCoroutine(HoldingPan());
         }
 
     }
@@ -85,10 +87,6 @@ public class CameraController : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        ClickOnScreen();
-    }
 
     private void ClickOnScreen()
     {
@@ -113,11 +111,11 @@ public class CameraController : MonoBehaviour
                     }
                 }
 
-                if (hitInfo.transform.name == "UpgradeYes")                
+                if (hitInfo.transform.name == "UpgradeYes")
                     hitInfo.transform.GetComponentInParent<TurretSpot>().UpgradeTower();
-                
+
                 else if (hitInfo.transform.name == "DismantleYes")
-                    hitInfo.transform.GetComponentInParent<TurretSpot>().DestroyTower();                
+                    hitInfo.transform.GetComponentInParent<TurretSpot>().DestroyTower();
             }
         }
     }
