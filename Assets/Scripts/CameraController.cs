@@ -84,7 +84,6 @@ public class CameraController : MonoBehaviour
                 moveCenterFocus(Vector3.up);
             }
         }
-
     }
 
 

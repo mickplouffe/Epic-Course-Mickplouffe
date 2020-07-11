@@ -3,6 +3,7 @@
 public class TurretSpot : MonoBehaviour
 {
     [SerializeField] ParticleSystem _placeParticules, _dismantleParticles, _placementParticules;
+    [SerializeField] GameObject turretPool; //To be move in the SpawnManager
     [SerializeField] bool _isOccupied;
 
     private void OnEnable()
@@ -30,8 +31,16 @@ public class TurretSpot : MonoBehaviour
 
                 _isOccupied = true;
                 _placementParticules.gameObject.SetActive(!_isOccupied);
-                GameObject Turret = Instantiate(turret, transform);
-                Turret.transform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z);
+
+                GameObject Turret = SpawnerManager.Instance.SpawnTurret(turret.name);
+                if (Turret != null)
+                {
+                    Turret.SetActive(true);
+                    Turret.transform.parent = this.transform;
+                    Turret.transform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z);
+                }
+
+
 
                 if (_placeParticules != null)
                 {
@@ -53,10 +62,20 @@ public class TurretSpot : MonoBehaviour
                 GameManager.Instance.AddWarFunds(-turretComp.GetWarFundCost());
                 _isOccupied = true;
                 _placementParticules.gameObject.SetActive(!_isOccupied);
-                GameObject Turret = Instantiate(turretUpgrade, transform);
-                Turret.transform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z);
+                GameObject Turret = SpawnerManager.Instance.SpawnTurret(turretUpgrade.name);
 
-                DestroyCurrentTower();
+                if (Turret != null)
+                {
+                    Turret.SetActive(true);
+                    Turret.transform.parent = this.transform;
+                    Turret.transform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z);
+                    DestroyCurrentTower();
+
+                }
+                else
+                    Debug.LogError("Turret Invalid");
+
+
 
                 if (_placeParticules != null)
                 {
@@ -64,14 +83,15 @@ public class TurretSpot : MonoBehaviour
                     PlaceParticles.transform.position = transform.position;
                 }
             }
-        }        
+        }
     }
 
     public void DestroyCurrentTower()
     {
         if (transform.childCount == 3)
         {
-            Destroy(transform.GetChild(1).transform.gameObject);
+            transform.GetChild(1).transform.gameObject.SetActive(false);
+            transform.GetChild(1).parent = GameObject.Find("SpawnPoint/TurretPool").transform;
         }
     }
 
@@ -79,15 +99,15 @@ public class TurretSpot : MonoBehaviour
     {
         if (transform.childCount > 1)
         {
-            GameManager.Instance.AddWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().GetWarFundCost()/2));
-            
-            Destroy(transform.GetChild(1).transform.gameObject);
+            GameManager.Instance.AddWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().GetWarFundCost() / 2));
+
+            transform.GetChild(1).transform.gameObject.SetActive(false);
+            transform.GetChild(1).parent = GameObject.Find("SpawnPoint/TurretPool").transform;
+
 
             _isOccupied = false;
 
             _placementParticules.gameObject.SetActive(!_isOccupied);
-
-
         }
     }
 

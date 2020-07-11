@@ -94,7 +94,6 @@ public class HUDController : MonoSingleton<HUDController>
             if (_placeHolder != null)
             {
                 PlacingTurret?.Invoke(false);
-
                 Destroy(_placeHolder.gameObject);
             }
         }
@@ -199,7 +198,7 @@ public class HUDController : MonoSingleton<HUDController>
                 break;
 
             case "waves":
-                //_wavesCount.text = WaveManager.Instance.GetCurrentWave().ToString();
+                _wavesCount.text = SpawnerManager.Instance.GetCurrentWave().ToString();
                 break;
 
             case "funds":
@@ -208,7 +207,7 @@ public class HUDController : MonoSingleton<HUDController>
 
             default:
                 _livesCount.text = GameManager.Instance.GetHealth().ToString();
-                //_wavesCount.text = WaveManager.Instance.GetCurrentWave().ToString();
+                _wavesCount.text = (SpawnerManager.Instance.GetCurrentWave() + "/" + SpawnerManager.Instance.GetSubWaveInCurrentWave());
                 _warFundCount.text = currentFunds.ToString().ToString();
                 HealthStatus();
                 break;
