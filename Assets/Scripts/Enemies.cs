@@ -17,8 +17,8 @@ public class Enemies : MonoBehaviour, IDamagable
     private void OnEnable()
     {
         GameManager.resetGameEvent += ResetEnemy;
-        if (_target == null)        
-            _target = GameObject.Find("TheHQ");    
+        if (_target == null)
+            _target = GameObject.Find("TheHQ");
     }
 
     private void OnDisable() => GameManager.resetGameEvent -= ResetEnemy;
@@ -46,7 +46,7 @@ public class Enemies : MonoBehaviour, IDamagable
         Invoke("Dissolving", _cleanUpTime);
 
     }
-    void Dissolving() => Invoke("Diying", 0);    
+    void Dissolving() => Invoke("Diying", 0);
 
     void Diying()
     {
@@ -77,11 +77,11 @@ public class Enemies : MonoBehaviour, IDamagable
 
     public void TakeDamage(int dmg = 1)
     {
-        Health -= dmg;   
+        Health -= dmg;
 
         if (Health <= 0)
-        {           
-            
+        {
+
             gameObject.tag = "DeadEnemy";
 
             if (animator != null)

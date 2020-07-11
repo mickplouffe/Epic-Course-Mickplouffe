@@ -2,22 +2,20 @@
 
 public class TurretSpot : MonoBehaviour
 {
-    [SerializeField] ParticleSystem _placeParticules, _dismantleParticles, _placementParticules;
-    [SerializeField] GameObject turretPool; //To be move in the SpawnManager
+    [SerializeField] ParticleSystem _dismantleParticles, _placementParticules;
+    [SerializeField] GameObject _placeParticules;
     [SerializeField] bool _isOccupied;
 
     private void OnEnable()
     {
         HUDController.PlacingTurret += PlacementParticules;
         GameManager.resetGameEvent += ResetTurretSpot;
-
     }
 
     private void OnDisable()
     {
         HUDController.PlacingTurret -= PlacementParticules;
         GameManager.resetGameEvent -= ResetTurretSpot;
-
     }
 
     public void PlaceTower(GameObject turret)
@@ -25,14 +23,15 @@ public class TurretSpot : MonoBehaviour
         if (!_isOccupied)
         {
             Turret turretComp = turret.GetComponent<Turret>();
-            if ((GameManager.Instance.GetWarFunds() - turretComp.GetWarFundCost()) >= 0)
+            if ((GameManager.Instance.WarFunds - turretComp.WarFundCost) >= 0)
             {
-                GameManager.Instance.AddWarFunds(-turretComp.GetWarFundCost());
+                GameManager.Instance.AddWarFunds(-turretComp.WarFundCost);
 
                 _isOccupied = true;
                 _placementParticules.gameObject.SetActive(!_isOccupied);
 
                 GameObject Turret = SpawnerManager.Instance.SpawnTurret(turret.name);
+
                 if (Turret != null)
                 {
                     Turret.SetActive(true);
@@ -44,7 +43,7 @@ public class TurretSpot : MonoBehaviour
 
                 if (_placeParticules != null)
                 {
-                    ParticleSystem PlaceParticles = Instantiate(_placeParticules);
+                    GameObject PlaceParticles = Instantiate(_placeParticules);
                     PlaceParticles.transform.position = transform.position;
                 }
             }
@@ -57,9 +56,9 @@ public class TurretSpot : MonoBehaviour
         {
             GameObject turretUpgrade = transform.GetChild(1).GetComponent<Turret>().UpgradeTurret;
             Turret turretComp = turretUpgrade.GetComponent<Turret>();
-            if ((GameManager.Instance.GetWarFunds() - turretComp.GetWarFundCost()) >= 0)
+            if ((GameManager.Instance.WarFunds - turretComp.WarFundCost) >= 0)
             {
-                GameManager.Instance.AddWarFunds(-turretComp.GetWarFundCost());
+                GameManager.Instance.AddWarFunds(-turretComp.WarFundCost);
                 _isOccupied = true;
                 _placementParticules.gameObject.SetActive(!_isOccupied);
                 GameObject Turret = SpawnerManager.Instance.SpawnTurret(turretUpgrade.name);
@@ -79,7 +78,7 @@ public class TurretSpot : MonoBehaviour
 
                 if (_placeParticules != null)
                 {
-                    ParticleSystem PlaceParticles = Instantiate(_placeParticules);
+                    GameObject PlaceParticles = Instantiate(_placeParticules);
                     PlaceParticles.transform.position = transform.position;
                 }
             }
@@ -99,7 +98,7 @@ public class TurretSpot : MonoBehaviour
     {
         if (transform.childCount > 1)
         {
-            GameManager.Instance.AddWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().GetWarFundCost() / 2));
+            GameManager.Instance.AddWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().WarFundCost / 2));
 
             transform.GetChild(1).transform.gameObject.SetActive(false);
             transform.GetChild(1).parent = GameObject.Find("SpawnPoint/TurretPool").transform;

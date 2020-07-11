@@ -43,7 +43,7 @@ public class HUDController : MonoSingleton<HUDController>
 
     private void Start()
     {
-        currentFunds = GameManager.Instance.GetWarFunds();
+        currentFunds = GameManager.Instance.WarFunds;
         initialFunds = currentFunds;
         desiredFunds = currentFunds;
         UpdateHUD();
@@ -119,15 +119,15 @@ public class HUDController : MonoSingleton<HUDController>
 
     public void TimePause(Image buttonPlay)
     {
-        if (Time.timeScale != 0)
-        {
-            buttonPlay.sprite = _playButtonSprites[1];
-            GameManager.Instance.ChangeTimeScale(0);
-        }
-        else
+        if (Time.timeScale == 0)
         {
             GameManager.Instance.ChangeTimeScale();
             buttonPlay.sprite = _playButtonSprites[0];
+        }
+        else
+        {
+            buttonPlay.sprite = _playButtonSprites[1];
+            GameManager.Instance.ChangeTimeScale(0);
         }
     }
 
@@ -193,12 +193,12 @@ public class HUDController : MonoSingleton<HUDController>
         switch (nameToUpdate)
         {
             case "lives":
-                _livesCount.text = GameManager.Instance.GetHealth().ToString();
+                _livesCount.text = GameManager.Instance.Health.ToString();
                 HealthStatus();
                 break;
 
             case "waves":
-                _wavesCount.text = SpawnerManager.Instance.GetCurrentWave().ToString();
+                _wavesCount.text = SpawnerManager.Instance.CurrentWave.ToString();
                 break;
 
             case "funds":
@@ -206,8 +206,8 @@ public class HUDController : MonoSingleton<HUDController>
                 break;
 
             default:
-                _livesCount.text = GameManager.Instance.GetHealth().ToString();
-                _wavesCount.text = (SpawnerManager.Instance.GetCurrentWave() + "/" + SpawnerManager.Instance.GetSubWaveInCurrentWave());
+                _livesCount.text = GameManager.Instance.Health.ToString();
+                _wavesCount.text = (SpawnerManager.Instance.CurrentWave + "/" + SpawnerManager.Instance.SubWaveInCurrentWave);
                 _warFundCount.text = currentFunds.ToString().ToString();
                 HealthStatus();
                 break;
@@ -216,7 +216,7 @@ public class HUDController : MonoSingleton<HUDController>
 
     void HealthStatus()
     {
-        int curretnHealth = GameManager.Instance.GetHealth();
+        int curretnHealth = GameManager.Instance.Health;
         if (curretnHealth > 60)
         {
             _healthCurrentStatus.text = "Good";
@@ -259,7 +259,7 @@ public class HUDController : MonoSingleton<HUDController>
     public void UpdateWarFund()
     {
         initialFunds = currentFunds;
-        desiredFunds = GameManager.Instance.GetWarFunds();
+        desiredFunds = GameManager.Instance.WarFunds;
     }
 
     void WarFundAnimation()
@@ -296,12 +296,13 @@ public class HUDController : MonoSingleton<HUDController>
         titleText.gameObject.SetActive(false);
     }
 
+    WaitForSeconds StartingWaveCountDownWaitForSeconds = new WaitForSeconds(1);
     IEnumerator StartingWaveCountDown(int time)
     {
         for (int i = time; i > 0; i--)
         {
             titleText.text = i.ToString();
-            yield return new WaitForSeconds(1);
+            yield return StartingWaveCountDownWaitForSeconds;
         }
         SpawnerManager.Instance.StartSpawning();
         WaveStopTimer();

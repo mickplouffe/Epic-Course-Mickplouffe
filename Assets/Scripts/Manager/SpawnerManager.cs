@@ -26,94 +26,64 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
+        if (Input.GetKeyDown(KeyCode.G))        
             HUDController.Instance.WaveStartTimer(5);
-        }
+        
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
+        if (Input.GetKeyDown(KeyCode.R))        
             StopCoroutine(instSpawning);
-        }
+        
     }
 
-    public void SetEnemyList(List<GameObject> enemiesList)
-    {
-        _enemies = enemiesList;
-    }
+    public void SetEnemyList(List<GameObject> enemiesList) => _enemies = enemiesList;
 
-    public void SetWaveList(List<Wave> waveList)
-    {
-        _waves = waveList;
-    }
+    public List<Wave> WaveList { get => _waves; set => _waves = value; }
 
     void ResetSpawnerManager()
     {
-        if (instSpawning != null)
-        {
-            StopSpawn();
-
-        }
+        if (instSpawning != null)        
+            StopSpawn();        
     }
 
-    public int GetCurrentWave()
-    {
-        return _currentSubWave;
-    }
+    public int CurrentWave => _currentSubWave;
 
-    public int GetSubWaveInCurrentWave()
-    {
-        return _subWaveInCurrentWave;
-    }
+    public int SubWaveInCurrentWave => _subWaveInCurrentWave;
 
-    public string GetCurrentWaveName()
-    {
-        return _currentSubWaveName;
-    }
+    public string CurrentWaveName => _currentSubWaveName;
 
     public GameObject SpawnTurret(string turretName)
     {
         GameObject foundTurretPooled = PoolManager.turretPooled.FirstOrDefault(j => j.name == turretName + "(Clone)" && j.activeSelf == false);
-        if (foundTurretPooled != null)
-        {
-            return foundTurretPooled;
-        }
-        else
+        if (foundTurretPooled == null)
         {
             GameObject turretObj = Instantiate(_turrets.Find(x => x.name == turretName));
             PoolManager.Instance.AddTurretToPool(turretObj);
             return turretObj;
+        }
+        else
+        {
+            return foundTurretPooled;
         }
     }
 
     void SpawnEnemy(string enemyType = null)
     {
         GameObject foundEnemy = _enemies.FirstOrDefault(i => i.name == enemyType);
-        GameObject enemyInst;
-
-        if (foundEnemy != null)
-        {
-            enemyInst = Instantiate(foundEnemy);
-        }
-        else
-        {
-            enemyInst = Instantiate(_enemies[Random.Range(0, _enemies.Count)]);
-
-        }
+        GameObject enemyInst = foundEnemy != null ? Instantiate(foundEnemy) : Instantiate(_enemies[Random.Range(0, _enemies.Count)]);
         enemyInst.GetComponent<NavMeshAgent>().Warp(_spawnPoint.transform.position);
         enemyInst.transform.parent = _enemiesContainer.transform;
         PoolManager.Instance.AddEnemyToPool(enemyInst);
     }
 
     public void StartSpawning() => instSpawning = StartCoroutine(SpawningEnemy());
+
     void StopSpawn() => StopCoroutine(instSpawning);
 
-    void Reuse(GameObject enemyToReuse = null)
+    void ReuseEnemy(GameObject enemyToReuse = null)
     {
-        if (enemyToReuse == null)
-        {
+        if (enemyToReuse == null)        
             enemyToReuse = _enemies[Random.Range(0, _enemies.Count)];
-        }
+        
         enemyToReuse.SetActive(true);
 
         NavMeshAgent navMeshAgentComp = enemyToReuse.GetComponent<NavMeshAgent>();
@@ -122,17 +92,20 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         navMeshAgentComp.SetDestination(_theHQ.transform.position);
     }
 
+
     IEnumerator SpawningEnemy()
     {
         float SpawnDelay;
         float WaveDelay;
 
-        foreach (var wavesItem in _waves)
+        for (int i = 0; i < _waves.Count; i++)
         {
+            Wave wavesItem = _waves[i];
             _subWaveInCurrentWave = wavesItem.SubWaves.Count;
             _currentSubWave = 0;
-            foreach (var subWavesItem in wavesItem.SubWaves)
+            for (int i1 = 0; i1 < wavesItem.SubWaves.Count; i1++)
             {
+                SubWave subWavesItem = wavesItem.SubWaves[i1];
                 _currentSubWave++;
                 _currentSubWaveName = subWavesItem.SubWaveName;
 
@@ -147,36 +120,28 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
                 else
                 {
                     WaveDelay = _defaultWaveDelay;
-                } 
+                }
 
-                foreach (var enemiesItem in subWavesItem.EnemyComposition)
+                foreach (var (nameTypeName, spawnDelay, foundEnemyPooled) in from enemiesItem in subWavesItem.EnemyComposition
+                                                                             let nameTypeName = enemiesItem.enemyTypeName
+                                                                             let spawnDelay = enemiesItem.nextSpawnDelay
+                                                                             let foundEnemyPooled = PoolManager.enemiesPooled.FirstOrDefault(j => j.name == nameTypeName + "(Clone)" && j.activeSelf == false)
+                                                                             select (nameTypeName, spawnDelay, foundEnemyPooled))
                 {
-                    string nameTypeName = enemiesItem.enemyTypeName;
-                    float spawnDelay = enemiesItem.nextSpawnDelay;
-
-                    GameObject foundEnemyPooled = PoolManager.enemiesPooled.FirstOrDefault(j => j.name == nameTypeName + "(Clone)" && j.activeSelf == false);
-
-                    if (foundEnemyPooled != null)
-                    {
-                        Reuse(foundEnemyPooled);
-                    }
-                    else
+                    if (foundEnemyPooled == null)
                     {
                         SpawnEnemy(nameTypeName);
                     }
-
-                    if (spawnDelay != 0)
-                    {
-                        SpawnDelay = spawnDelay;
-                    }
                     else
                     {
-                        SpawnDelay = _defaultSpawnDelay;
+                        ReuseEnemy(foundEnemyPooled);
                     }
 
+                    SpawnDelay = spawnDelay != 0 ? spawnDelay : _defaultSpawnDelay;
 
                     yield return new WaitForSeconds(SpawnDelay);
                 }
+
                 yield return new WaitForSeconds(WaveDelay);
 
             }
@@ -185,5 +150,5 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         StopCoroutine(instSpawning);
     }
 
-    
+
 }

@@ -22,10 +22,7 @@ public class GameManager : MonoSingleton<GameManager>
         defaultTimeScale = Time.timeScale;
         currentTimeScale = defaultTimeScale;
     }
-    private void OnDisable()
-    {
-        TheHQ.HQDamaged -= ChangeHealth;
-    }
+    private void OnDisable() => TheHQ.HQDamaged -= ChangeHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -42,57 +39,49 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public int WarFunds
+    {
+        get => warFund;
+        set
+        {
+            warFund = value;
+
+            if (warFund < 0)
+                warFund = 0;
+
+            HUDController.Instance.UpdateWarFund();
+        }
+    }
+
+    public int Health { get => _health; set => _health = value; }
+
     public void AddWarFunds(int amountToChange)
     {
         warFund += amountToChange;
 
-        if (warFund < 0)        
-            warFund = 0;
-
-        HUDController.Instance.UpdateWarFund();
-
-    }
-
-    public void SetWarFunds(int newAmount)
-    {
-        warFund = newAmount;
-
-        if (warFund < 0)        
+        if (warFund < 0)
             warFund = 0;
 
         HUDController.Instance.UpdateWarFund();
     }
 
-    public int GetWarFunds()
-    {
-        return warFund;
-    }
+    public float FixedTimestep => fixedFimestep;
 
-    public float GetFixedTimestep()
-    {
-        return fixedFimestep;
-    }
-
-    public float GetTimeScale()
-    {
-        return defaultTimeScale;
-    }
+    public float TimeScale => defaultTimeScale;
 
     public void ChangeTimeScale(float timeScaleMutiple)
     {
-        if (timeScaleMutiple == 0)
+        switch (timeScaleMutiple)
         {
-            currentTimeScale = Time.timeScale;
-            Time.timeScale = 0;
-        }
-        else
-        {
-            currentTimeScale = defaultTimeScale * timeScaleMutiple;
-            if (Time.timeScale != 0)
-            {
-                Time.timeScale = currentTimeScale;
-
-            }
+            case 0:
+                currentTimeScale = Time.timeScale;
+                Time.timeScale = 0;
+                break;
+            default:
+                currentTimeScale = defaultTimeScale * timeScaleMutiple;
+                if (Time.timeScale != 0)
+                    Time.timeScale = currentTimeScale;
+                break;
         }
     }
 
@@ -112,26 +101,18 @@ public class GameManager : MonoSingleton<GameManager>
         HUDController.Instance.UpdateHUD("lives");
     }
 
-    public void setHealth(int newHealth) => _health = newHealth;
-
-    public int GetHealth()
-    {
-        return _health;
-    }
-
 
     public void ResetGameSettings()
     {
         resetGameEvent?.Invoke();
-        SetWarFunds(currentLevelSettings.defaultWarFund);
+        WarFunds = currentLevelSettings.defaultWarFund;
         ChangeHealth(currentLevelSettings.endPointHealth);
-        GameManager.Instance.setHealth(currentLevelSettings.endPointHealth);
+        Instance.Health = currentLevelSettings.endPointHealth;
 
         ChangeTimeScale(currentLevelSettings.defaultTimeScale);
         SpawnerManager.Instance.SetEnemyList(currentLevelSettings.defaultEnemies);
-        SpawnerManager.Instance.SetWaveList(currentLevelSettings.DefaultWaves);
+        SpawnerManager.Instance.WaveList = currentLevelSettings.DefaultWaves;
 
         HUDController.Instance.UpdateHUD();
-
     }
 }

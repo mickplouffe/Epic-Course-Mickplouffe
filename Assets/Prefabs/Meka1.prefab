@@ -1149,12 +1149,11 @@ MonoBehaviour:
     type: 3}
   agent: {fileID: 5041635498737228247}
   animator: {fileID: 0}
-  <Health>k__BackingField: 5
+  <Health>k__BackingField: 500000
   _defaultHealth: 0
   _warFundValue: 10
+  _bodyDamage: 1
   _cleanUpTime: 5
-  _isDead: 0
-  _isDissolved: 0
 --- !u!114 &7050579192244821311
 MonoBehaviour:
   m_ObjectHideFlags: 0

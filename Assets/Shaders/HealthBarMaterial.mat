@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HealthBarMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 1a0c32d231cd9f643af6c118970875e0,
+  m_Shader: {fileID: -6465566751694194690, guid: 0f3795062ce44b7499caed7b0ee65fdc,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -19,7 +19,16 @@ Material:
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - Texture2D_4AE62DED:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _mainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats: []
     m_Colors:
     - Vector3_44A78B98: {r: 0, g: 0, b: 0, a: 0}
+    - _color: {r: 1, g: 1, b: 1, a: 0}

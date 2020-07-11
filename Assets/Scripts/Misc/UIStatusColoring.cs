@@ -19,8 +19,7 @@ public class UIStatusColoring : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (imgComponent != null)
-            if (theNewColor != imgComponent.color)
-                imgComponent.color = Color.Lerp(imgComponent.color, theNewColor, lerpTime * Time.fixedDeltaTime);
+        if (imgComponent != null && theNewColor != imgComponent.color)
+            imgComponent.color = Color.Lerp(imgComponent.color, theNewColor, lerpTime * Time.fixedDeltaTime);
     }
 }

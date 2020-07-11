@@ -25,24 +25,14 @@ public class CameraController : MonoBehaviour
         StartCoroutine(HoldingPan());
     }
 
-    private void Update()
-    {
-        ClickOnScreen();
-    }
+    private void Update() => ClickOnScreen();
 
 
     public void OnPan(InputAction.CallbackContext ctx)
     {
-        if (ctx.started)
-        {
+        if (ctx.started || ctx.canceled)
             panningAxis = ctx.ReadValue<Vector2>();
-            //StartCoroutine(HoldingPan());
-        }
-        else if (ctx.canceled)
-        {
-            panningAxis = ctx.ReadValue<Vector2>();
-            //StopCoroutine(HoldingPan());
-        }
+
 
     }
 
@@ -97,18 +87,8 @@ public class CameraController : MonoBehaviour
             {
                 DeselectAll?.Invoke();
 
-                if (hitInfo.transform.tag == "TurretSpot")
-                {
-                    if (hitInfo.transform.childCount == 2)
-                    {
-                        if (hitInfo.transform.GetChild(1))
-                        {
-                            hitInfo.transform.GetChild(1).GetComponent<Turret>().OnSelect();
-                            //hitInfo.transform.GetComponent<TurretSpot>().UpgradeTower();
-                        }
-                        //Select turret
-                    }
-                }
+                if (hitInfo.transform.tag == "TurretSpot" && hitInfo.transform.childCount == 2 && hitInfo.transform.GetChild(1))
+                    hitInfo.transform.GetChild(1).GetComponent<Turret>().OnSelect();
 
                 if (hitInfo.transform.name == "UpgradeYes")
                     hitInfo.transform.GetComponentInParent<TurretSpot>().UpgradeTower();
@@ -119,12 +99,13 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    WaitForSecondsRealtime moveCenterFocusWaitTime = new WaitForSecondsRealtime(.03f);
     IEnumerator HoldingPan()
     {
         while (true)
         {
             moveCenterFocus(new Vector3(panningAxis.x, 0, panningAxis.y));
-            yield return new WaitForSecondsRealtime(.05f);
+            yield return moveCenterFocusWaitTime;
         }
 
     }

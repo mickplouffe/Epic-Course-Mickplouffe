@@ -24,45 +24,26 @@ public class Turret : MonoBehaviour, ITurret, IDamagable
         animator = GetComponent<Animator>();
     }
 
-    public int GetWarFundCost()
-    {
-        return _warFundCost;
-    }
-    
-    public void TakeDamage(int damageAmount)
-    {
-        Health -= damageAmount;
-    }
+    public int WarFundCost => _warFundCost;
+
+    public void TakeDamage(int damageAmount) => Health -= damageAmount;
 
     void OnDeselect()
     {
-        if (UI_Elements != null)
-        {
-            //UI_Elements.SetActive(false);
-            if (animator != null)
-                animator.SetBool("isUIUP", false);
-                        
-        }
+        if (UI_Elements != null && animator != null)
+            animator.SetBool("isUIUP", false);
 
-        if (turretTargeting != null)
-        {
+        if (turretTargeting != null)        
             turretTargeting.OnDeselected();
-        }
+        
     }
 
     public void OnSelect()
     {
-        if (UI_Elements != null)
-        {
-            //UI_Elements.SetActive(true);
-            if (animator != null)
-                animator.SetBool("isUIUP", true);
+        if (UI_Elements != null && animator != null)
+            animator.SetBool("isUIUP", true);
 
-        }
-
-        if (turretTargeting != null)
-        {
-            turretTargeting.OnSelected();
-        }
+        if (turretTargeting != null)        
+            turretTargeting.OnSelected();        
     }
 }

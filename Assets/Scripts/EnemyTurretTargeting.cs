@@ -1,16 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
 
 public class EnemyTurretTargeting : MonoBehaviour
 {
     [SerializeField] GameObject _rotationObj, _target;
     [SerializeField] float _rotationSpeed = 1, _range = 30;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -42,16 +36,16 @@ public class EnemyTurretTargeting : MonoBehaviour
         GameObject closest = null;
         float distance = _range;
         Vector3 position = _rotationObj.transform.position;
-        foreach (GameObject go in gos)
+        foreach (var (go, curDistance) in from GameObject go in gos
+                                          let diff = go.transform.position - position
+                                          let curDistance = diff.sqrMagnitude
+                                          where curDistance < distance
+                                          select (go, curDistance))
         {
-            Vector3 diff = go.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
-            {
-                closest = go;
-                distance = curDistance;
-            }
+            closest = go;
+            distance = curDistance;
         }
+
         return closest;
     }
 }

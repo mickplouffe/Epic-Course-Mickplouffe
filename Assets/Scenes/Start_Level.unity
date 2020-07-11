@@ -2527,7 +2527,7 @@ MonoBehaviour:
   _spawnPoint: {fileID: 1471011039}
   _theHQ: {fileID: 8296172668816500651}
   _enemiesContainer: {fileID: 615499230}
-  _defaultSpawnDelay: 2
+  _defaultSpawnDelay: 1
   _defaultWaveDelay: 10
   _currentSubWave: 0
   _subWaveInCurrentWave: 0
@@ -5077,7 +5077,7 @@ MonoBehaviour:
   currentLevelSettings: {fileID: 11400000, guid: 888d4d5291d79504b9b3aa8088901c67,
     type: 2}
   _isSpawnerEnabled: 1
-  warFund: 1500
+  warFund: 150000
   _health: 100
   fixedFimestep: 0.02
   defaultTimeScale: 0
