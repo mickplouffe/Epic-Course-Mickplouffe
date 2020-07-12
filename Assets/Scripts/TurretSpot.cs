@@ -2,8 +2,8 @@
 
 public class TurretSpot : MonoBehaviour
 {
-    [SerializeField] ParticleSystem _dismantleParticles, _placementParticules;
-    [SerializeField] GameObject _placeParticules;
+    [SerializeField] ParticleSystem _placementParticules;
+    [SerializeField] GameObject _placeParticules, _dismantleParticles;
     [SerializeField] bool _isOccupied;
 
     private void OnEnable()
@@ -44,7 +44,7 @@ public class TurretSpot : MonoBehaviour
                 if (_placeParticules != null)
                 {
                     GameObject PlaceParticles = Instantiate(_placeParticules);
-                    PlaceParticles.transform.position = transform.position;
+                    PlaceParticles.transform.position = transform.position + (Vector3.up / 1.9f);
                 }
             }
         }
@@ -79,7 +79,7 @@ public class TurretSpot : MonoBehaviour
                 if (_placeParticules != null)
                 {
                     GameObject PlaceParticles = Instantiate(_placeParticules);
-                    PlaceParticles.transform.position = transform.position;
+                    PlaceParticles.transform.position = transform.position + (Vector3.up / 1.9f);
                 }
             }
         }
@@ -98,7 +98,7 @@ public class TurretSpot : MonoBehaviour
     {
         if (transform.childCount > 1)
         {
-            GameManager.Instance.AddWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().WarFundCost / 2));
+            GameManager.Instance.AddWarFunds(Mathf.RoundToInt(transform.GetChild(1).GetComponent<Turret>().WarFundCost / 1.9f));
 
             transform.GetChild(1).transform.gameObject.SetActive(false);
             transform.GetChild(1).parent = GameObject.Find("SpawnPoint/TurretPool").transform;
@@ -107,6 +107,12 @@ public class TurretSpot : MonoBehaviour
             _isOccupied = false;
 
             _placementParticules.gameObject.SetActive(!_isOccupied);
+
+            if (_placeParticules != null)
+            {
+                GameObject DismantleParticles = Instantiate(_dismantleParticles);
+                DismantleParticles.transform.position = transform.position + (Vector3.up/2);
+            }
         }
     }
 

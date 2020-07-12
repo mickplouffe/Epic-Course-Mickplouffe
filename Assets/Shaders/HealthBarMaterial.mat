@@ -28,7 +28,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - _height: 1
+    - _width: 1
     m_Colors:
+    - Vector2_39B2E7ED: {r: 1.3, g: -0.4, b: 0, a: 0}
+    - Vector2_C9629CDD: {r: 0, g: 0, b: 0, a: 0}
     - Vector3_44A78B98: {r: 0, g: 0, b: 0, a: 0}
-    - _color: {r: 1, g: 1, b: 1, a: 0}
+    - _color: {r: 0.084590435, g: 1, b: 0, a: 1}
+    - _colorLerp: {r: 0, g: 0, b: 0, a: 0}
+    - _dangerColor: {r: 1, g: 0, b: 0, a: 0}
+    - _offset: {r: 0, g: 0, b: 0, a: 0}

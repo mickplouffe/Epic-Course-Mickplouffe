@@ -107,9 +107,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183b5eabe6eda8b488ce772849915552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dismantleParticles: {fileID: 0}
   _placementParticules: {fileID: 8894513800505050124}
   _placeParticules: {fileID: 7081152148831311840, guid: 8331705f39cfd414f81c54fbafccd6be,
+    type: 3}
+  _dismantleParticles: {fileID: 7081152148831311840, guid: 17a9f7c19026bf345aebe15dfa6417ba,
     type: 3}
   _isOccupied: 0
 --- !u!1001 &5316951079170962671

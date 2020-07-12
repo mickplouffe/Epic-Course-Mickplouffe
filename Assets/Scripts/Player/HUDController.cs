@@ -61,9 +61,9 @@ public class HUDController : MonoSingleton<HUDController>
     {
         if (_placeHolder != null)
         {
-            Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition); //controlScheme.UI.Point.ReadValue<Vector2>()
             RaycastHit hitInfo;
-            if (Physics.Raycast(rayOrigin, out hitInfo))
+            //controlScheme.UI.Point.ReadValue<Vector2>()
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo)) 
             {
                 if (hitInfo.transform.tag == "TurretSpot")
                 {
