@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 46f8ce024d4b6204e930a06d782c4c37
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - MaxTurretPrefab: {fileID: 1873819670802014, guid: 4565034b2cea2354aa1991c60bc1cd44,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,10 +1,11 @@
 ﻿using System;
-using UnityEngine;
+
+public enum EnemyTypeName { Meka1, Meka2, Random };
+
 
 [Serializable]
 public class WaveEnemyComposition
 {
-    public string enemyTypeName;
+    public EnemyTypeName enemyTypeName;
     public float nextSpawnDelay;
-
 }

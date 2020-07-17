@@ -66,7 +66,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
         }
     }
 
-    void SpawnEnemy(string enemyType = null)
+    public void SpawnEnemy(string enemyType = null)
     {
         GameObject foundEnemy = _enemies.FirstOrDefault(i => i.name == enemyType);
         GameObject enemyInst = foundEnemy != null ? Instantiate(foundEnemy) : Instantiate(_enemies[Random.Range(0, _enemies.Count)]);
@@ -130,7 +130,7 @@ public class SpawnerManager : MonoSingleton<SpawnerManager>
                 {
                     if (foundEnemyPooled == null)
                     {
-                        SpawnEnemy(nameTypeName);
+                        SpawnEnemy(nameTypeName.ToString());
                     }
                     else
                     {

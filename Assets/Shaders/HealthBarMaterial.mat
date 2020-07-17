@@ -37,5 +37,5 @@ Material:
     - Vector3_44A78B98: {r: 0, g: 0, b: 0, a: 0}
     - _color: {r: 0.084590435, g: 1, b: 0, a: 1}
     - _colorLerp: {r: 0, g: 0, b: 0, a: 0}
-    - _dangerColor: {r: 1, g: 0, b: 0, a: 0}
+    - _dangerColor: {r: 1, g: 0, b: 0, a: 1}
     - _offset: {r: 0, g: 0, b: 0, a: 0}

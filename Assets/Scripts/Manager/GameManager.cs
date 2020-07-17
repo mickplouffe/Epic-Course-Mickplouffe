@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+
 public class GameManager : MonoSingleton<GameManager>
 {
     [Header("General Settings")]
@@ -13,6 +14,9 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] [Range(0.0f, 10.0f)] float defaultTimeScale;
     [SerializeField] [Range(0.0f, 10.0f)] float currentTimeScale;
 
+#if UNITY_EDITOR
+    public static Action doRepaint;
+#endif
 
     public static Action resetGameEvent;
 
@@ -83,6 +87,9 @@ public class GameManager : MonoSingleton<GameManager>
                     Time.timeScale = currentTimeScale;
                 break;
         }
+#if UNITY_EDITOR
+        doRepaint?.Invoke();
+#endif
     }
 
     public void ChangeTimeScale()
@@ -91,6 +98,9 @@ public class GameManager : MonoSingleton<GameManager>
         {
             Time.timeScale = currentTimeScale;
         }
+#if UNITY_EDITOR
+        doRepaint?.Invoke();
+#endif
     }
 
     public void ChangeHealth(int HealthAmount = 1)
